@@ -44,8 +44,8 @@ a { color: var(--primary-color); text-decoration: none; transition: var(--transi
 /* Marquee Partners */
 .marquee-wrapper { background: #fff; padding: 24px 0; border-bottom: 1px solid var(--surface-border); overflow: hidden; display: flex; align-items: center; }
 .marquee { display: flex; gap: 64px; width: max-content; animation: scroll 20s linear infinite; }
-.marquee img { height: 32px; object-fit: contain; filter: grayscale(100%) opacity(0.6); transition: var(--transition); }
-.marquee img:hover { filter: grayscale(0%) opacity(1); }
+.marquee img { height: 32px; object-fit: contain; transition: var(--transition); }
+.marquee img:hover { transform: scale(1.05); }
 @keyframes scroll { to { transform: translateX(-50%); } }
 
 /* Shared Section Styles */
