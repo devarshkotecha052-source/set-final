@@ -42,6 +42,7 @@
           <div><h3 style="color:#fff; font-size: 2rem;">$75M</h3><span style="color:#a0aec0">Acquisition</span></div>
         </div>
         <a href="#friction" class="btn-primary">Initialize Research</a>
+        <button class="btn-secondary explore-btn" data-module="overview" style="margin-left: 12px; background: rgba(255,255,255,0.05); color:#fff; border: 1px solid rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 6px; cursor:pointer; font-weight:600; font-size: 1rem; transition: background 0.3s;">Explore Company Dashboard</button>
       </div>
     </div>
   </header>
@@ -116,6 +117,7 @@
             </ul>
           </div>
           <input type="range" min="0" max="100" value="50" class="slider-input" id="friction-slider">
+          <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="problem" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Detailed Problem Study</button></div>
           <div class="slider-line" id="slider-line"></div>
         </div>
       </div>
@@ -174,6 +176,7 @@
             <p>Both founders met while operating at the very core of India's Digital Public Infrastructure (DPI). They realized that while the government built the rails (UPI, Aadhaar, Account Aggregator), private companies couldn't access them easily. Setu was born to be the missing "bridge" (Setu means bridge in Hindi) between these public goods and private innovation.</p>
           </div>
         </div>
+        <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="founders" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Founder Profiles</button></div>
       </div>
     </div>
   </section>
@@ -221,6 +224,7 @@
           <p style="margin-top:12px; font-size:0.9rem; color:var(--text-tertiary);"><strong>Regulators:</strong> NPCI, RBI, UIDAI.<br><strong>Tech Giants:</strong> Pine Labs (now parent company).</p>
         </div>
       </div>
+      <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="business_model" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Unit Economics & Canvas</button></div>
     </div>
   </section>
 
@@ -335,7 +339,7 @@
           <button class="btn-primary" id="btn-v3-restart" style="margin-top:24px; width:100%;">Run Another Scenario</button>
         </div>
       </div>
-      
+      <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="products" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Detailed Product Breakdown</button></div>
     </div>
   </section>
   <!-- 4. Geography & Scale -->
@@ -590,7 +594,7 @@ l30 31 -38 32 c-25 21 -46 31 -60 28 -13 -2 -29 3 -40 15 -18 20 -11 34 21 40
             </div>
           </div>
         </div>
-        
+        <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="scale" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Ecosystem Hubs & Partners</button></div>
       </div>
       
       <!-- Ecosystem Diagram -->
@@ -651,6 +655,7 @@ l30 31 -38 32 c-25 21 -46 31 -60 28 -13 -2 -29 3 -40 15 -18 20 -11 34 21 40
           <p style="font-size:0.9rem; margin-top:8px;">Rise of well-funded competitors like M2P Fintech, Decentro, and RazorpayX entering the API infrastructure space.</p>
         </div>
       </div>
+      <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="status" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Financial & SWOT Analysis</button></div>
 
       <h3 style="margin-bottom: 24px;">Major Milestones & News</h3>
       <div class="news-grid">
@@ -677,6 +682,20 @@ l30 31 -38 32 c-25 21 -46 31 -60 28 -13 -2 -29 3 -40 15 -18 20 -11 34 21 40
     <img src="./setu-logo.svg" alt="Setu" style="height: 32px; filter: brightness(0) invert(1); margin-bottom: 24px;">
     <p style="color:#a0aec0; font-size:0.9rem;">Interactive Fintech Encyclopedia • Built for High-Density Data Storytelling</p>
   </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Research Drawer -->
+  <div id="research-drawer" class="research-drawer">
+    <div class="drawer-header">
+      <h3 id="drawer-title" style="margin:0; font-size:1.4rem; color:#fff;">Research Module</h3>
+      <span id="close-drawer" class="close-drawer">&times;</span>
+    </div>
+    <div class="drawer-body" id="drawer-body">
+      <!-- Dynamic content will be injected here -->
+    </div>
+  </div>
 
   <script type="module" src="/main.js"></script>
 
