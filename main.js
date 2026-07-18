@@ -1,4 +1,4 @@
-// Setu Fintech Encyclopedia V2.5 Interactive Logic
+// Setu Fintech Encyclopedia V2.6 Interactive Logic (Accordions IA)
 document.addEventListener('DOMContentLoaded', () => {
   
   // ==========================================
@@ -37,28 +37,104 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 2. Category Tab Switcher
+  // 2. Category & Subheading Accordions
   // ==========================================
-  const encTabs = document.querySelectorAll('.enc-tab');
-  const encPanels = document.querySelectorAll('.enc-panel');
+  const catWrappers = document.querySelectorAll('.category-wrapper');
+  const subCards = document.querySelectorAll('.enc-subheading-card');
   
-  encTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      encTabs.forEach(t => t.classList.remove('active'));
-      encPanels.forEach(p => p.classList.remove('active'));
+  // Category Accordion Toggle
+  catWrappers.forEach(wrapper => {
+    const header = wrapper.querySelector('.category-header');
+    const content = wrapper.querySelector('.category-content');
+    
+    header.addEventListener('click', () => {
+      const isAlreadyActive = wrapper.classList.contains('active');
       
-      tab.classList.add('active');
-      const targetPanel = document.getElementById('panel-' + tab.getAttribute('data-tab'));
-      if(targetPanel) {
-        targetPanel.classList.add('active');
-        
-        // Initialize chart when financials tab opens to calculate canvas size correctly
-        if (tab.getAttribute('data-tab') === 'financials') {
-          setTimeout(initFinancialsChart, 100);
+      // Close other categories
+      catWrappers.forEach(otherWrapper => {
+        if (otherWrapper !== wrapper) {
+          otherWrapper.classList.remove('active');
+          const otherContent = otherWrapper.querySelector('.category-content');
+          otherContent.style.maxHeight = null;
+        }
+      });
+      
+      if (isAlreadyActive) {
+        wrapper.classList.remove('active');
+        content.style.maxHeight = null;
+      } else {
+        wrapper.classList.add('active');
+        // Smooth transition helper: set to scrollHeight, then uncap
+        content.style.maxHeight = content.scrollHeight + 1000 + 'px';
+        setTimeout(() => {
+          if (wrapper.classList.contains('active')) {
+            content.style.maxHeight = 'none';
+          }
+        }, 500);
+
+        // If financials category is opened, initialize Chart.js
+        if (wrapper.id === 'cat-financials') {
+          setTimeout(initFinancialsChart, 200);
         }
       }
     });
   });
+
+  // Subheading Accordion Toggle
+  subCards.forEach(card => {
+    const header = card.querySelector('.subheading-header');
+    const body = card.querySelector('.subheading-body');
+    
+    header.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent category click
+      const isAlreadyActive = card.classList.contains('active');
+      
+      if (isAlreadyActive) {
+        card.classList.remove('active');
+        body.style.maxHeight = null;
+      } else {
+        card.classList.add('active');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        
+        // Push state to update URL hash
+        history.pushState(null, null, '#' + card.id);
+        
+        // Smooth scroll to card
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 150);
+      }
+    });
+  });
+
+  // Handle direct links on load via URL Hash
+  const hash = window.location.hash;
+  if (hash) {
+    const targetCard = document.querySelector(hash);
+    if (targetCard) {
+      // Find parent category wrapper
+      const parentWrapper = targetCard.closest('.category-wrapper');
+      if (parentWrapper) {
+        parentWrapper.classList.add('active');
+        const parentContent = parentWrapper.querySelector('.category-content');
+        parentContent.style.maxHeight = 'none';
+        
+        if (parentWrapper.id === 'cat-financials') {
+          setTimeout(initFinancialsChart, 200);
+        }
+      }
+      
+      targetCard.classList.add('active');
+      const cardBody = targetCard.querySelector('.subheading-body');
+      if (cardBody) {
+        cardBody.style.maxHeight = cardBody.scrollHeight + 'px';
+      }
+      
+      setTimeout(() => {
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 500);
+    }
+  }
 
   // ==========================================
   // 3. Before vs After Slider (Friction)
@@ -78,13 +154,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const fTabs = document.querySelectorAll('.f-tab');
   const fBios = document.querySelectorAll('.f-bio');
   fTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
+    tab.addEventListener('click', (e) => {
+      e.stopPropagation();
       fTabs.forEach(t => t.classList.remove('active'));
       fBios.forEach(b => b.classList.remove('active'));
       tab.classList.add('active');
       const targetId = 'bio-' + tab.getAttribute('data-target');
       const targetEl = document.getElementById(targetId);
-      if(targetEl) targetEl.classList.add('active');
+      if(targetEl) {
+        targetEl.classList.add('active');
+        
+        // Auto-expand parent body container since bio size might vary
+        const subCard = tab.closest('.enc-subheading-card');
+        if (subCard) {
+          const body = subCard.querySelector('.subheading-body');
+          body.style.maxHeight = 'none';
+        }
+      }
     });
   });
 
