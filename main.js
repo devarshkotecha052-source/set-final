@@ -1,30 +1,233 @@
-// Experience Setu Dual-Screen Simulation Logic (V4 - Interactive Step-by-Step)
+// Setu Fintech Encyclopedia V2.5 Interactive Logic
 document.addEventListener('DOMContentLoaded', () => {
-  // Intersection Observer for scroll animations
+  
+  // ==========================================
+  // 1. Scroll Animations & Counters
+  // ==========================================
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        if (entry.target.classList.contains('counter')) {
+          animateCounter(entry.target);
+          entry.target.classList.remove('counter');
+        }
       }
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.fade-up, .stagger-item').forEach(el => {
-    observer.observe(el);
+  document.querySelectorAll('.fade-up, .stagger-item, .counter').forEach(el => observer.observe(el));
+
+  function animateCounter(el) {
+    const target = parseFloat(el.getAttribute('data-target'));
+    const isFloat = !Number.isInteger(target);
+    const duration = 2000;
+    const step = target / (duration / 16);
+    let current = 0;
+    const update = () => {
+      current += step;
+      if (current < target) {
+        el.innerText = isFloat ? current.toFixed(1) : Math.ceil(current).toLocaleString();
+        requestAnimationFrame(update);
+      } else {
+        el.innerText = (isFloat ? target.toFixed(1) : target.toLocaleString()) + (el.getAttribute('data-suffix') || '');
+      }
+    };
+    update();
+  }
+
+  // ==========================================
+  // 2. Category Tab Switcher
+  // ==========================================
+  const encTabs = document.querySelectorAll('.enc-tab');
+  const encPanels = document.querySelectorAll('.enc-panel');
+  
+  encTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      encTabs.forEach(t => t.classList.remove('active'));
+      encPanels.forEach(p => p.classList.remove('active'));
+      
+      tab.classList.add('active');
+      const targetPanel = document.getElementById('panel-' + tab.getAttribute('data-tab'));
+      if(targetPanel) {
+        targetPanel.classList.add('active');
+        
+        // Initialize chart when financials tab opens to calculate canvas size correctly
+        if (tab.getAttribute('data-tab') === 'financials') {
+          setTimeout(initFinancialsChart, 100);
+        }
+      }
+    });
   });
 
-  const tabs = document.querySelectorAll('.v3-tab:not(.disabled)');
+  // ==========================================
+  // 3. Before vs After Slider (Friction)
+  // ==========================================
+  const slider = document.getElementById('friction-slider');
+  const sliderImage = document.querySelector('.slider-after');
+  if (slider && sliderImage) {
+    sliderImage.style.clipPath = `polygon(0 0, ${slider.value}% 0, ${slider.value}% 100%, 0 100%)`;
+    slider.addEventListener('input', (e) => {
+      sliderImage.style.clipPath = `polygon(0 0, ${e.target.value}% 0, ${e.target.value}% 100%, 0 100%)`;
+    });
+  }
+
+  // ==========================================
+  // 4. Founders Tabs
+  // ==========================================
+  const fTabs = document.querySelectorAll('.f-tab');
+  const fBios = document.querySelectorAll('.f-bio');
+  fTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      fTabs.forEach(t => t.classList.remove('active'));
+      fBios.forEach(b => b.classList.remove('active'));
+      tab.classList.add('active');
+      const targetId = 'bio-' + tab.getAttribute('data-target');
+      const targetEl = document.getElementById(targetId);
+      if(targetEl) targetEl.classList.add('active');
+    });
+  });
+
+  // ==========================================
+  // 5. Geography Map & Timeline Slider
+  // ==========================================
+  const geoSlider = document.getElementById('geo-year-slider');
+  const hubs = document.querySelectorAll('.hub-marker');
+  const infoTitle = document.getElementById('geo-info-title');
+  const infoBadge = document.getElementById('geo-info-badge');
+  const infoDesc = document.getElementById('geo-info-desc');
+  
+  const hubData = {
+    blr: {
+      title: "Bengaluru",
+      badge: "Headquarters (2018)",
+      desc: "Setu's birthplace and core engineering hub. Our platform operations, product development, and primary API routing infrastructure reside here."
+    },
+    bom: {
+      title: "Mumbai",
+      badge: "Financial Hub (2019)",
+      desc: "Direct connections to India's major partner banks, NBFCs, and financial institutions ensuring sub-100ms latency for critical transactions."
+    },
+    del: {
+      title: "Delhi",
+      badge: "Govt Stack (2020)",
+      desc: "Crucial routing node for India Stack integrations including UIDAI (Aadhaar OKYC), NSDL (PAN Verification), and DigiLocker."
+    },
+    hyd: {
+      title: "Hyderabad",
+      badge: "Fintech Hub (2021)",
+      desc: "Supporting the massive influx of fintech partners, lending startups, and wealth-tech apps utilizing Setu's APIs."
+    },
+    maa: {
+      title: "Chennai",
+      badge: "AA Hub (2022)",
+      desc: "Primary node handling the massive data loads for Account Aggregator decryption, machine learning categorization, and insights."
+    }
+  };
+
+  if(geoSlider) {
+    geoSlider.addEventListener('input', (e) => {
+      const year = parseInt(e.target.value);
+      
+      hubs.forEach(hub => {
+        const hubYear = parseInt(hub.getAttribute('data-year'));
+        if(year >= hubYear) {
+          hub.style.opacity = '1';
+          hub.style.pointerEvents = 'auto';
+        } else {
+          hub.style.opacity = '0';
+          hub.style.pointerEvents = 'none';
+        }
+      });
+      
+      infoTitle.innerText = "Ecosystem Growth";
+      infoBadge.innerText = "Year " + year;
+      
+      if(year === 2018) infoDesc.innerText = "Setu founded in Bengaluru. Initial infrastructure laid down.";
+      if(year === 2019) infoDesc.innerText = "Expansion into Mumbai to connect with partner banks and NBFCs.";
+      if(year === 2020) infoDesc.innerText = "Integration with Delhi's UIDAI and NSDL government stacks.";
+      if(year === 2021) infoDesc.innerText = "Hyderabad node opens to support massive fintech startup volume.";
+      if(year >= 2022) infoDesc.innerText = "Chennai node handles the Account Aggregator revolution. Full India routing active.";
+    });
+  }
+
+  hubs.forEach(hub => {
+    hub.addEventListener('mouseenter', () => {
+      const id = hub.getAttribute('data-hub');
+      const data = hubData[id];
+      if(data) {
+        infoTitle.innerText = data.title;
+        infoBadge.innerText = data.badge;
+        infoDesc.innerText = data.desc;
+      }
+    });
+  });
+
+  // ==========================================
+  // 6. Chart.js Financials
+  // ==========================================
+  let financialsChart = null;
+  function initFinancialsChart() {
+    if (financialsChart) return;
+    const canvas = document.getElementById('revenueChart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    financialsChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['FY20', 'FY21', 'FY22', 'FY23'],
+        datasets: [
+          {
+            label: 'Operating Revenue (INR Cr)',
+            data: [0.16, 3.2, 9.2, 15.3],
+            borderColor: '#42cacd',
+            backgroundColor: 'rgba(66,202,205,0.1)',
+            borderWidth: 2,
+            fill: true
+          },
+          {
+            label: 'Net Loss (INR Cr)',
+            data: [4.5, 12.1, 29.1, 31.7],
+            borderColor: '#e53e3e',
+            backgroundColor: 'rgba(229,62,62,0.1)',
+            borderWidth: 2,
+            fill: true
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { color: '#a0aec0' }
+          },
+          x: {
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { color: '#a0aec0' }
+          }
+        },
+        plugins: {
+          legend: {
+            labels: { color: '#fff' }
+          }
+        }
+      }
+    });
+  }
+
+  // ==========================================
+  // 7. V4 iPhone Simulator Logic
+  // ==========================================
   const appScreen = document.getElementById('v3-app-screen');
   const diagramTrack = document.getElementById('v3-diagram-track');
-  
   const explWhat = document.getElementById('v3-what');
   const explWhy = document.getElementById('v3-why');
   const explRole = document.getElementById('v3-role');
-  
   const metApi = document.getElementById('met-api');
   const metLat = document.getElementById('met-lat');
   const metSrv = document.getElementById('met-srv');
-  
   const celOverlay = document.getElementById('v3-celebration');
   const celApis = document.getElementById('cel-apis');
   const celTime = document.getElementById('cel-time');
@@ -34,7 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   let currentScenario = null;
   let apiCount = 0;
-  let startTime = 0;
   let srvCount = 0;
   let nextStepResolver = null;
 
@@ -54,9 +256,9 @@ document.addEventListener('DOMContentLoaded', () => {
           html: `
             <div class="v3-app-header">CryptoX</div>
             <div class="v3-app-card">
-              <h4 style="margin-bottom:8px;">Identity Verification</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-bottom:16px;">We need to verify your PAN before you can trade.</p>
-              <label style="font-size: 0.75rem; color: #4a5568; font-weight: bold; margin-bottom: 4px; display: block;">Permanent Account Number</label>
+              <h4 style="margin-bottom:8px; color:#1a202c;">Identity Verification</h4>
+              <p style="font-size:0.8rem; color:#718096; margin-bottom:16px;">We need to verify your PAN before you can trade.</p>
+              <label style="font-size: 0.7rem; color: #4a5568; font-weight: bold; margin-bottom: 4px; display: block;">Permanent Account Number</label>
               <input type="text" class="v3-input" value="ABCDE1234F" readonly />
               <button class="v3-btn" onclick="simTrigger('kyc', 1)">Verify PAN securely</button>
             </div>
@@ -70,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="skeleton-line" style="width: 60%;"></div>
               <div class="skeleton-line" style="width: 100%;"></div>
               <div class="skeleton-line" style="width: 80%;"></div>
-              <p style="font-size:0.85rem; color:#718096; margin-top:24px; text-align:center;">Verifying with NSDL...</p>
+              <p style="font-size:0.8rem; color:#718096; margin-top:24px; text-align:center;">Verifying with NSDL...</p>
             </div>
           `
         },
@@ -80,8 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="v3-app-header">CryptoX</div>
             <div class="v3-app-card" style="text-align:center; padding: 40px 20px;">
               <div style="font-size:3rem; color:#38a169; margin-bottom:16px;">✓</div>
-              <h4>Identity Verified</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-top:8px;">Welcome to CryptoX! Your account is fully activated.</p>
+              <h4 style="color:#1a202c;">Identity Verified</h4>
+              <p style="font-size:0.8rem; color:#718096; margin-top:8px;">Welcome to CryptoX! Your account is fully activated.</p>
               <button class="v3-btn" style="margin-top:24px;" onclick="showCelebration('234ms')">Go to Portfolio</button>
             </div>
           `
@@ -89,9 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ],
       actions: {
         1: async () => {
-          startTime = Date.now();
           transitionScreen('kyc-2');
-          
           updateExpl('App validates input', 'Basic frontend sanity check before calling servers.', '-');
           await activateNode('n-app');
           await waitNext();
@@ -123,7 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
           await waitNext();
           
           updateExpl('Response Normalization', 'NSDL returns raw XML which is hard to parse.', 'Setu standardizes the XML back into a clean, predictable JSON response.');
-          document.getElementById('n-nsdl').classList.add('success');
+          const nsdl = document.getElementById('n-nsdl');
+          if (nsdl) nsdl.classList.add('success');
           await sendPacket('n-nsdl', 'n-rout', true);
           await sendPacket('n-rout', 'n-auth', true);
           await sendPacket('n-auth', 'n-gw', true);
@@ -134,250 +335,6 @@ document.addEventListener('DOMContentLoaded', () => {
           await sendPacket('n-srv', 'n-app', true);
           
           transitionScreen('kyc-3');
-        }
-      }
-    },
-    aa: {
-      nodes: [
-        { id: 'n-app', icon: '📱', label: 'App Frontend' },
-        { id: 'n-gw', icon: '⚡', label: 'Setu Gateway' },
-        { id: 'n-fiu', icon: '🔍', label: 'FIU Module' },
-        { id: 'n-cons', icon: '📝', label: 'Consent Mgr' },
-        { id: 'n-fip', icon: '🏦', label: 'HDFC Bank (FIP)' }
-      ],
-      screens: [
-        {
-          id: 'aa-1',
-          html: `
-            <div class="v3-app-header">LendSmart</div>
-            <div class="v3-app-card">
-              <h4 style="margin-bottom:8px;">Loan Eligibility</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-bottom:16px;">We need 6 months of bank statements to assess your loan.</p>
-              <button class="v3-btn" onclick="simTrigger('aa', 1)">Link Bank Account</button>
-            </div>
-          `
-        },
-        {
-          id: 'aa-2',
-          html: `
-            <div class="v3-app-header" style="color: #42cacd;">Setu AA Screen</div>
-            <div class="v3-app-card" style="border: 2px solid #42cacd;">
-              <h4 style="margin-bottom:8px;">Approve Data Share</h4>
-              <div style="background:#f4f6f8; padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 0.8rem;">
-                <strong>Bank:</strong> HDFC Bank Ltd<br>
-                <strong>Duration:</strong> 6 Months<br>
-                <strong>Purpose:</strong> Loan Underwriting
-              </div>
-              <button class="v3-btn" style="background:#42cacd;" onclick="simTrigger('aa', 2)">I Approve</button>
-            </div>
-          `
-        },
-        {
-          id: 'aa-3',
-          html: `
-            <div class="v3-app-header">LendSmart</div>
-            <div class="v3-app-card" style="padding: 32px 20px;">
-               <div class="skeleton-line" style="width: 100%;"></div>
-               <div class="skeleton-line" style="width: 80%;"></div>
-               <p style="font-size:0.85rem; color:#718096; margin-top:24px; text-align:center;">Decrypting Bank Data...</p>
-            </div>
-          `
-        },
-        {
-          id: 'aa-4',
-          html: `
-            <div class="v3-app-header">LendSmart</div>
-            <div class="v3-app-card" style="text-align:center;">
-              <h4 style="color:#38a169;">Approved: ₹5,00,000</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-top:8px;">Based on your healthy cash flows, you are pre-approved!</p>
-              <button class="v3-btn" style="margin-top:24px;" onclick="showCelebration('412ms')">Accept Loan</button>
-            </div>
-          `
-        }
-      ],
-      actions: {
-        1: async () => {
-          transitionScreen('aa-2');
-          updateExpl('Request Consent', 'App requests the Account Aggregator interface.', 'Setu generates a secure RBI-compliant webview (visible on the phone).');
-          await activateNode('n-app');
-          await sendPacket('n-app', 'n-gw');
-          await activateNode('n-gw');
-          await sendPacket('n-gw', 'n-cons');
-          await activateNode('n-cons');
-          incApi();
-        },
-        2: async () => {
-          transitionScreen('aa-3');
-          updateExpl('Data Fetch Triggered', 'User approved the consent. We must now retrieve the actual bank data.', 'Setu acts as the Financial Information User (FIU) on behalf of LendSmart.');
-          await waitNext();
-          
-          await sendPacket('n-cons', 'n-fiu');
-          await activateNode('n-fiu');
-          await sendPacket('n-fiu', 'n-fip');
-          await activateNode('n-fip');
-          incApi();
-          
-          updateExpl('Bank Packing Data', 'The user\'s bank (FIP) queries its core banking system for 6 months of statements.', 'Setu securely polls or waits for a webhook from the bank.');
-          await waitNext();
-          
-          updateExpl('Data Decryption', 'The bank statement is returned heavily encrypted to prevent tampering.', 'Setu decrypts it locally and parses the raw ISO formats into clean JSON.');
-          document.getElementById('n-fip').classList.add('success');
-          await sendPacket('n-fip', 'n-fiu', true);
-          await sendPacket('n-fiu', 'n-gw', true);
-          await sendPacket('n-gw', 'n-app', true);
-          await waitNext();
-          
-          updateExpl('Underwriting Complete', 'LendSmart runs its underwriting rules on the decrypted JSON.', '-');
-          transitionScreen('aa-4');
-        }
-      }
-    },
-    payment: {
-      nodes: [
-        { id: 'n-app', icon: '📱', label: 'QuickPay' },
-        { id: 'n-gw', icon: '⚡', label: 'Setu API' },
-        { id: 'n-upi', icon: '🔄', label: 'UPI Switch' },
-        { id: 'n-npci', icon: '🏦', label: 'NPCI Core' }
-      ],
-      screens: [
-        {
-          id: 'pay-1',
-          html: `
-            <div class="v3-app-header">QuickPay</div>
-            <div class="v3-app-card">
-              <h4 style="margin-bottom:8px; text-align:center;">Send to Merchant</h4>
-              <input type="text" class="v3-input" value="₹2,500" readonly style="font-size:1.5rem; text-align:center; font-weight:bold;" />
-              <button class="v3-btn" onclick="simTrigger('payment', 1)">Pay Securely</button>
-            </div>
-          `
-        },
-        {
-          id: 'pay-2',
-          html: `
-            <div class="v3-app-header">QuickPay</div>
-            <div class="v3-app-card" style="text-align:center; padding: 32px 20px;">
-               <div class="skeleton-line" style="width: 100%;"></div>
-               <div class="skeleton-line" style="width: 60%;"></div>
-               <p style="font-size:0.85rem; color:#718096; margin-top:24px;">Please authorize on your UPI app...</p>
-            </div>
-          `
-        },
-        {
-          id: 'pay-3',
-          html: `
-            <div class="v3-app-header">QuickPay</div>
-            <div class="v3-app-card" style="text-align:center;">
-              <div style="font-size:3rem; color:#38a169; margin-bottom:16px;">✓</div>
-              <h4 style="color:#38a169;">Payment Success</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-top:8px;">Transaction SETU12345 confirmed.</p>
-              <button class="v3-btn" style="margin-top:24px;" onclick="showCelebration('1.2s')">View Receipt</button>
-            </div>
-          `
-        }
-      ],
-      actions: {
-        1: async () => {
-          transitionScreen('pay-2');
-          updateExpl('UPI Collect Initiated', 'A payment request is triggered to the user\'s VPA (UPI ID).', 'Setu abstracts away the complex UPI spec via a single REST API call.');
-          await activateNode('n-app');
-          await sendPacket('n-app', 'n-gw');
-          await activateNode('n-gw');
-          incApi();
-          await waitNext();
-          
-          updateExpl('NPCI Routing', 'The request travels to the central NPCI switch.', 'Setu translates the REST API call into ISO standard banking messages that NPCI requires.');
-          await sendPacket('n-gw', 'n-upi');
-          await activateNode('n-upi');
-          await sendPacket('n-upi', 'n-npci');
-          await activateNode('n-npci');
-          await waitNext();
-          
-          updateExpl('Webhook Confirmation', 'The user opened their GPay/PhonePe and entered their PIN.', 'Setu receives the async webhook from NPCI and instantly notifies the merchant.');
-          document.getElementById('n-npci').classList.add('success');
-          await sendPacket('n-npci', 'n-upi', true);
-          await sendPacket('n-upi', 'n-gw', true);
-          await sendPacket('n-gw', 'n-app', true);
-          
-          transitionScreen('pay-3');
-        }
-      }
-    },
-    statement: {
-      nodes: [
-        { id: 'n-app', icon: '📱', label: 'MoneyView' },
-        { id: 'n-gw', icon: '⚡', label: 'Setu API' },
-        { id: 'n-parser', icon: '📄', label: 'Statement Parser' },
-        { id: 'n-engine', icon: '⚙️', label: 'Categorization' }
-      ],
-      screens: [
-        {
-          id: 'stat-1',
-          html: `
-            <div class="v3-app-header">MoneyView</div>
-            <div class="v3-app-card">
-              <h4 style="margin-bottom:8px;">Upload Statement</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-bottom:16px;">Upload your PDF e-statement to analyze your spending.</p>
-              <button class="v3-btn" onclick="simTrigger('statement', 1)">Upload statement.pdf</button>
-            </div>
-          `
-        },
-        {
-          id: 'stat-2',
-          html: `
-            <div class="v3-app-header">MoneyView</div>
-            <div class="v3-app-card" style="padding: 32px 20px;">
-               <div class="skeleton-line" style="width: 100%;"></div>
-               <div class="skeleton-line" style="width: 80%;"></div>
-               <p style="font-size:0.85rem; color:#718096; margin-top:24px; text-align:center;">Extracting transactions...</p>
-            </div>
-          `
-        },
-        {
-          id: 'stat-3',
-          html: `
-            <div class="v3-app-header">MoneyView</div>
-            <div class="v3-app-card">
-              <h4 style="color:#38a169;">Insights Ready</h4>
-              <div style="display:flex; justify-content:space-between; margin-top:16px; padding-bottom:8px; border-bottom:1px solid #e2e8f0;">
-                <span style="font-size:0.8rem; font-weight:600;">Food & Dining</span>
-                <span style="font-size:0.8rem; color:#e53e3e;">-₹12,400</span>
-              </div>
-              <div style="display:flex; justify-content:space-between; margin-top:8px; padding-bottom:8px; border-bottom:1px solid #e2e8f0;">
-                <span style="font-size:0.8rem; font-weight:600;">Salary</span>
-                <span style="font-size:0.8rem; color:#38a169;">+₹85,000</span>
-              </div>
-              <button class="v3-btn" style="margin-top:24px;" onclick="showCelebration('1.5s')">View Full Report</button>
-            </div>
-          `
-        }
-      ],
-      actions: {
-        1: async () => {
-          transitionScreen('stat-2');
-          updateExpl('File Upload', 'The user uploads a password-protected PDF bank statement.', 'Setu securely ingests the file via API.');
-          await activateNode('n-app');
-          await sendPacket('n-app', 'n-gw');
-          await activateNode('n-gw');
-          incApi();
-          await waitNext();
-          
-          updateExpl('PDF Parsing', 'The PDF is a visual document, not structured data.', 'Setu\'s proprietary parser reads the document structure, applies the password, and extracts raw transaction strings.');
-          await sendPacket('n-gw', 'n-parser');
-          await activateNode('n-parser');
-          await waitNext();
-          
-          updateExpl('ML Categorization', 'Raw strings like "UPI-SWIGGY-1234" need context.', 'Setu\'s AI engine categorizes it as "Food & Dining" and detects if it\'s a credit or debit.');
-          await sendPacket('n-parser', 'n-engine');
-          await activateNode('n-engine');
-          await waitNext();
-          
-          updateExpl('Insights Delivery', 'The app receives perfectly structured JSON data.', 'Setu formats the machine learning output into clean, ready-to-use JSON.');
-          document.getElementById('n-engine').classList.add('success');
-          await sendPacket('n-engine', 'n-parser', true);
-          await sendPacket('n-parser', 'n-gw', true);
-          await sendPacket('n-gw', 'n-app', true);
-          
-          transitionScreen('stat-3');
         }
       }
     },
@@ -393,8 +350,8 @@ document.addEventListener('DOMContentLoaded', () => {
           html: `
             <div class="v3-app-header">CreditApp</div>
             <div class="v3-app-card">
-              <h4 style="margin-bottom:8px;">Check Score</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-bottom:16px;">We need your consent to fetch your credit report.</p>
+              <h4 style="margin-bottom:8px; color:#1a202c;">Check Score</h4>
+              <p style="font-size:0.8rem; color:#718096; margin-bottom:16px;">We need your consent to fetch your credit report.</p>
               <button class="v3-btn" onclick="simTrigger('loan', 1)">Fetch Credit Score</button>
             </div>
           `
@@ -405,7 +362,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="v3-app-header">CreditApp</div>
             <div class="v3-app-card" style="padding: 32px 20px;">
                <div class="skeleton-line" style="width: 100%;"></div>
-               <p style="font-size:0.85rem; color:#718096; margin-top:24px; text-align:center;">Querying Bureaus...</p>
+               <p style="font-size:0.8rem; color:#718096; margin-top:24px; text-align:center;">Querying Bureaus...</p>
             </div>
           `
         },
@@ -416,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="v3-app-card" style="text-align:center;">
               <div style="font-size:3rem; color:#38a169; margin-bottom:8px;">785</div>
               <h4 style="color:#1a202c;">Excellent Score</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-top:8px;">You have no defaults in the last 3 years.</p>
+              <p style="font-size:0.8rem; color:#718096; margin-top:8px;">You have no defaults in the last 3 years.</p>
               <button class="v3-btn" style="margin-top:24px;" onclick="showCelebration('290ms')">Apply for Card</button>
             </div>
           `
@@ -438,7 +395,8 @@ document.addEventListener('DOMContentLoaded', () => {
           await waitNext();
           
           updateExpl('Scoring', 'Bureau returns the report.', 'Setu parses the massive legacy file into a simple, developer-friendly JSON object containing the score.');
-          document.getElementById('n-cibil').classList.add('success');
+          const cib = document.getElementById('n-cibil');
+          if (cib) cib.classList.add('success');
           await sendPacket('n-cibil', 'n-gw', true);
           await sendPacket('n-gw', 'n-app', true);
           
@@ -446,102 +404,100 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     },
-    identity: {
+    autopay: {
       nodes: [
-        { id: 'n-app', icon: '📱', label: 'Onboarder' },
-        { id: 'n-gw', icon: '⚡', label: 'Setu API' },
-        { id: 'n-uidai', icon: '👁️', label: 'UIDAI / Aadhaar' }
+        { id: 'n-app', icon: '📱', label: 'Subscription' },
+        { id: 'n-gw', icon: '⚡', label: 'Setu Autopay' },
+        { id: 'n-bank', icon: '🏦', label: 'Issuer Bank' }
       ],
       screens: [
         {
-          id: 'id-1',
+          id: 'auto-1',
           html: `
-            <div class="v3-app-header">Onboarder</div>
+            <div class="v3-app-header">Netflix</div>
             <div class="v3-app-card">
-              <h4 style="margin-bottom:8px;">Aadhaar OKYC</h4>
-              <input type="text" class="v3-input" value="1234 5678 9012" readonly />
-              <button class="v3-btn" onclick="simTrigger('identity', 1)">Send OTP</button>
+              <h4 style="margin-bottom:8px; color:#1a202c;">Autopay Setup</h4>
+              <p style="font-size:0.8rem; color:#718096; margin-bottom:16px;">Set up monthly auto-debit of ₹649 for your Premium plan.</p>
+              <button class="v3-btn" onclick="simTrigger('autopay', 1)">Enable UPI Autopay</button>
             </div>
           `
         },
         {
-          id: 'id-2',
+          id: 'auto-2',
           html: `
-            <div class="v3-app-header">Onboarder</div>
+            <div class="v3-app-header">Netflix</div>
             <div class="v3-app-card" style="padding: 32px 20px;">
                <div class="skeleton-line" style="width: 100%;"></div>
-               <p style="font-size:0.85rem; color:#718096; margin-top:24px; text-align:center;">Contacting UIDAI...</p>
+               <p style="font-size:0.8rem; color:#718096; margin-top:24px; text-align:center;">Registering mandate...</p>
             </div>
           `
         },
         {
-          id: 'id-3',
+          id: 'auto-3',
           html: `
-            <div class="v3-app-header">Onboarder</div>
+            <div class="v3-app-header">Netflix</div>
             <div class="v3-app-card" style="text-align:center;">
-              <h4 style="color:#38a169;">OTP Sent</h4>
-              <p style="font-size:0.85rem; color:#718096; margin-top:8px;">Enter the 6-digit OTP sent to your linked mobile.</p>
-              <input type="text" class="v3-input" placeholder="------" style="text-align:center; letter-spacing:4px; font-weight:bold;" />
-              <button class="v3-btn" onclick="showCelebration('340ms')">Verify</button>
+              <div style="font-size:3rem; color:#38a169; margin-bottom:16px;">✓</div>
+              <h4 style="color:#1a202c;">Mandate Active</h4>
+              <p style="font-size:0.8rem; color:#718096; margin-top:8px;">Autopay registered. Your next billing is on 18th Aug.</p>
+              <button class="v3-btn" style="margin-top:24px;" onclick="showCelebration('380ms')">Start Watching</button>
             </div>
           `
         }
       ],
       actions: {
         1: async () => {
-          transitionScreen('id-2');
-          updateExpl('OTP Request', 'The app requests an Aadhaar OTP generation.', 'Setu securely routes the Aadhaar number to the UIDAI infrastructure.');
+          transitionScreen('auto-2');
+          updateExpl('Register Mandate', 'The subscription merchant requests a recurring collection authorization.', 'Setu wraps UPI 2.0 mandate creation endpoints into a unified API.');
           await activateNode('n-app');
           await sendPacket('n-app', 'n-gw');
           await activateNode('n-gw');
           incApi();
           await waitNext();
           
-          updateExpl('UIDAI Dispatch', 'UIDAI validates the Aadhaar number and dispatches an SMS.', 'Setu waits for the UIDAI confirmation of SMS dispatch.');
-          await sendPacket('n-gw', 'n-uidai');
-          await activateNode('n-uidai');
+          updateExpl('Bank Authorization', 'The mandate request is routed to the customer\'s bank for execution.', 'Setu handles the callback endpoints and processes bank OTP callbacks.');
+          await sendPacket('n-gw', 'n-bank');
+          await activateNode('n-bank');
           await waitNext();
           
-          updateExpl('Success', 'The user receives the OTP.', 'Setu forwards the success state to the app to show the OTP input screen.');
-          document.getElementById('n-uidai').classList.add('success');
-          await sendPacket('n-uidai', 'n-gw', true);
+          updateExpl('Callback Ingestion', 'Bank confirms that the mandate has been created successfully.', 'Setu registers the webhook, confirms the UPI token, and notifies Netflix.');
+          const bankNode = document.getElementById('n-bank');
+          if (bankNode) bankNode.classList.add('success');
+          await sendPacket('n-bank', 'n-gw', true);
           await sendPacket('n-gw', 'n-app', true);
           
-          transitionScreen('id-3');
+          transitionScreen('auto-3');
         }
       }
     }
   };
-  
-  // Core Functions
+
   window.simTrigger = async (scen, actionId) => {
     document.querySelectorAll('.v3-btn').forEach(b => b.disabled = true);
-    
-    // Enable the "Next Step" button for manual advancing
-    btnNext.style.display = 'block';
-    btnNext.disabled = false;
-    
+    if(btnNext) {
+      btnNext.style.display = 'block';
+      btnNext.disabled = false;
+    }
     await scenarios[scen].actions[actionId]();
-    
-    // Disable Next after flow finishes
-    btnNext.style.display = 'none';
+    if(btnNext) btnNext.style.display = 'none';
     document.querySelectorAll('.v3-btn').forEach(b => b.disabled = false);
   };
 
-  // The step-by-step halting mechanism
   function waitNext() {
     return new Promise(resolve => {
       nextStepResolver = resolve;
     });
   }
   
-  btnNext.addEventListener('click', () => {
-    if (nextStepResolver) {
-      let r = nextStepResolver;
-      nextStepResolver = null; // Consume
-      r();
-    }
-  });
+  if(btnNext) {
+    btnNext.addEventListener('click', () => {
+      if (nextStepResolver) {
+        let r = nextStepResolver;
+        nextStepResolver = null; 
+        r();
+      }
+    });
+  }
 
   function transitionScreen(screenId) {
     const current = document.querySelector('.v3-screen.active');
@@ -555,22 +511,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateExpl(what, why, role) {
-    explWhat.innerText = what;
-    explWhy.innerText = why;
-    explRole.innerText = role;
+    if(explWhat) explWhat.innerText = what;
+    if(explWhy) explWhy.innerText = why;
+    if(explRole) explRole.innerText = role;
     
-    // Flash effect to draw attention
-    explWhat.parentElement.style.animation = 'none';
-    explWhat.parentElement.offsetHeight; /* trigger reflow */
-    explWhat.parentElement.style.animation = 'pulse 0.5s ease';
+    if(explWhat && explWhat.parentElement) {
+      explWhat.parentElement.style.animation = 'none';
+      explWhat.parentElement.offsetHeight; 
+      explWhat.parentElement.style.animation = 'pulse 0.5s ease';
+    }
   }
 
   function incApi() {
     apiCount++;
-    metApi.innerText = apiCount;
-    metApi.classList.add('updated');
-    setTimeout(() => metApi.classList.remove('updated'), 300);
-    metLat.innerText = Math.floor(Math.random() * 50 + 20) + 'ms';
+    if(metApi) {
+      metApi.innerText = apiCount;
+      metApi.classList.add('updated');
+      setTimeout(() => metApi.classList.remove('updated'), 300);
+    }
+    if(metLat) metLat.innerText = Math.floor(Math.random() * 50 + 20) + 'ms';
   }
 
   async function activateNode(id) {
@@ -578,16 +537,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if(n) {
       n.classList.add('active');
       srvCount++;
-      metSrv.innerText = srvCount;
+      if(metSrv) metSrv.innerText = srvCount;
     }
     await sleep(200);
   }
 
   async function sendPacket(fromId, toId, rev = false) {
     const track = document.getElementById('v3-diagram-track');
+    const toNode = document.getElementById(toId);
+    if(!track || !toNode) return;
+    
     const path = document.createElement('div');
     path.className = 'v3-path';
-    track.insertBefore(path, document.getElementById(toId)); 
+    track.insertBefore(path, toNode); 
     
     const pkt = document.createElement('div');
     pkt.className = `v3-packet ${rev ? 'rev' : 'fwd'}`;
@@ -600,26 +562,28 @@ document.addEventListener('DOMContentLoaded', () => {
   async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
   window.showCelebration = (time) => {
-    celApis.innerText = apiCount;
-    celTime.innerText = time;
-    celNodes.innerText = srvCount;
-    celOverlay.classList.add('active');
+    if(celApis) celApis.innerText = apiCount;
+    if(celTime) celTime.innerText = time;
+    if(celNodes) celNodes.innerText = srvCount;
+    if(celOverlay) celOverlay.classList.add('active');
   };
 
   function loadScenario(scenKey) {
     if(currentScenario === scenKey) return;
     currentScenario = scenKey;
     
-    // Reset state
-    celOverlay.classList.remove('active');
-    btnNext.style.display = 'none';
+    if(celOverlay) celOverlay.classList.remove('active');
+    if(btnNext) btnNext.style.display = 'none';
     if(nextStepResolver) { nextStepResolver(); nextStepResolver = null; }
     
     apiCount = 0; srvCount = 0;
-    metApi.innerText = '0'; metSrv.innerText = '0'; metLat.innerText = '0ms';
+    if(metApi) metApi.innerText = '0';
+    if(metSrv) metSrv.innerText = '0';
+    if(metLat) metLat.innerText = '0ms';
     updateExpl('Interact with the phone to begin.', '-', '-');
     
     const sc = scenarios[scenKey];
+    if(!sc || !diagramTrack || !appScreen) return;
     
     // Render Nodes
     diagramTrack.innerHTML = '';
@@ -647,550 +611,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  tabs.forEach(tab => {
+  const v3Tabs = document.querySelectorAll('.v3-tab');
+  v3Tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
+      v3Tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       loadScenario(tab.getAttribute('data-scenario'));
     });
   });
 
-  btnRestart.addEventListener('click', () => {
-    currentScenario = null;
-    const activeTab = document.querySelector('.v3-tab.active');
-    loadScenario(activeTab.getAttribute('data-scenario'));
-  });
+  if(btnRestart) {
+    btnRestart.addEventListener('click', () => {
+      currentScenario = null;
+      const activeTab = document.querySelector('.v3-tab.active');
+      if(activeTab) loadScenario(activeTab.getAttribute('data-scenario'));
+    });
+  }
 
-  // Init
+  // Initialize V4 simulator
   loadScenario('kyc');
-});
-
-// Geography & Scale Interactive Logic
-document.addEventListener('DOMContentLoaded', () => {
-  const geoSlider = document.getElementById('geo-year-slider');
-  const hubs = document.querySelectorAll('.geo-hub');
-  const chips = document.querySelectorAll('.geo-chip');
-  
-  const infoTitle = document.getElementById('geo-info-title');
-  const infoYear = document.getElementById('geo-info-year');
-  const infoDesc = document.getElementById('geo-info-desc');
-  const networkLayer = document.querySelector('.layer-network');
-  
-  const ecoNodes = document.querySelectorAll('.geo-eco-node');
-  const ecoExpl = document.getElementById('eco-expl');
-  
-  const hubData = {
-    blr: {
-      title: "Bengaluru",
-      badge: "Headquarters (2018)",
-      desc: "Setu's birthplace and core engineering hub. Our platform operations, product development, and primary API routing infrastructure reside here."
-    },
-    bom: {
-      title: "Mumbai",
-      badge: "Financial Hub (2019)",
-      desc: "Direct connections to India's major partner banks, NBFCs, and financial institutions ensuring sub-100ms latency for critical transactions."
-    },
-    del: {
-      title: "Delhi",
-      badge: "Govt Stack (2020)",
-      desc: "Crucial routing node for India Stack integrations including UIDAI (Aadhaar OKYC), NSDL (PAN Verification), and DigiLocker."
-    },
-    hyd: {
-      title: "Hyderabad",
-      badge: "Fintech Hub (2021)",
-      desc: "Supporting the massive influx of fintech partners, lending startups, and wealth-tech apps utilizing Setu's APIs."
-    },
-    maa: {
-      title: "Chennai",
-      badge: "AA Hub (2022)",
-      desc: "Primary node handling the massive data loads for Account Aggregator decryption, machine learning categorization, and insights."
-    }
-  };
-  
-  const ecoData = {
-    citizen: "The end consumer requesting a financial service (e.g., applying for a loan, making a payment).",
-    fintech: "The consumer-facing application (e.g., Groww, CRED) that integrates Setu's APIs to offer the service.",
-    setu: "The orchestration engine. Setu translates the app's request, handles security/routing, and standardizes responses.",
-    stack: "India's digital public infrastructure (Aadhaar, UPI, Account Aggregator) securely providing identity and data.",
-    bank: "The regulated financial institution providing the underlying capital, account, or credit."
-  };
-
-  // 1. Timeline Logic
-  if(geoSlider) {
-    geoSlider.addEventListener('input', (e) => {
-      const year = parseInt(e.target.value);
-      
-      hubs.forEach(hub => {
-        const hubYear = parseInt(hub.getAttribute('data-year'));
-        if(year >= hubYear) {
-          hub.classList.remove('hidden-by-year');
-        } else {
-          hub.classList.add('hidden-by-year');
-        }
-      });
-      
-      // If network layer is enabled via chips, hide it before 2019
-      if(networkLayer && !networkLayer.classList.contains('hidden-by-layer')) {
-        networkLayer.style.opacity = year >= 2019 ? '1' : '0';
-      }
-      
-      infoTitle.innerText = "Ecosystem Growth";
-      infoYear.innerText = "Year " + year;
-      
-      if(year === 2018) infoDesc.innerText = "Setu founded in Bengaluru. Initial infrastructure laid down.";
-      if(year === 2019) infoDesc.innerText = "Expansion into Mumbai to connect with partner banks and NBFCs.";
-      if(year === 2020) infoDesc.innerText = "Integration with Delhi's UIDAI and NSDL government stacks.";
-      if(year === 2021) infoDesc.innerText = "Hyderabad node opens to support massive fintech startup volume.";
-      if(year >= 2022) infoDesc.innerText = "Chennai node handles the Account Aggregator revolution. Full India routing active.";
-    });
-  }
-  
-  // 2. Map Hub Hover/Click
-  hubs.forEach(hub => {
-    hub.addEventListener('mouseenter', () => {
-      const id = hub.getAttribute('data-hub');
-      const data = hubData[id];
-      if(data) {
-        infoTitle.innerText = data.title;
-        infoYear.innerText = data.badge;
-        infoDesc.innerText = data.desc;
-        infoTitle.style.animation = 'none';
-        infoTitle.offsetHeight; 
-        infoTitle.style.animation = 'pulse 0.5s ease';
-      }
-    });
-  });
-  
-  // 3. Layer Toggles
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      chip.classList.toggle('active');
-      const layer = chip.getAttribute('data-layer');
-      const isActive = chip.classList.contains('active');
-      
-      if(layer === 'network' && networkLayer) {
-        if(isActive && parseInt(geoSlider.value) >= 2019) {
-          networkLayer.style.opacity = '1';
-          networkLayer.classList.remove('hidden-by-layer');
-        } else {
-          networkLayer.style.opacity = '0';
-          networkLayer.classList.add('hidden-by-layer');
-        }
-      } else {
-        document.querySelectorAll('.layer-' + layer).forEach(el => {
-          if(isActive) el.classList.remove('hidden-by-layer');
-          else el.classList.add('hidden-by-layer');
-        });
-      }
-    });
-  });
-  
-  // 4. Ecosystem Diagram Hover
-  ecoNodes.forEach(node => {
-    node.addEventListener('mouseenter', () => {
-      const id = node.getAttribute('data-eco');
-      ecoExpl.innerText = ecoData[id] || "Hover over any node above to understand its responsibility in the value chain.";
-    });
-    node.addEventListener('mouseleave', () => {
-      ecoExpl.innerText = "Hover over any node above to understand its responsibility in the value chain.";
-    });
-  });
-
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  // 4. Before/After Slider (Friction)
-  const slider = document.getElementById('friction-slider');
-  const sliderImage = document.querySelector('.slider-after');
-  if (slider && sliderImage) {
-    sliderImage.style.clipPath = `polygon(0 0, ${slider.value}% 0, ${slider.value}% 100%, 0 100%)`;
-    slider.addEventListener('input', (e) => {
-      sliderImage.style.clipPath = `polygon(0 0, ${e.target.value}% 0, ${e.target.value}% 100%, 0 100%)`;
-    });
-  }
-
-  // 5. Founders Tabs
-  const fTabs = document.querySelectorAll('.f-tab');
-  const fBios = document.querySelectorAll('.f-bio');
-  fTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      fTabs.forEach(t => t.classList.remove('active'));
-      fBios.forEach(b => b.classList.remove('active'));
-      tab.classList.add('active');
-      const targetId = 'bio-' + tab.getAttribute('data-target');
-      const targetEl = document.getElementById(targetId);
-      if(targetEl) targetEl.classList.add('active');
-    });
-  });
-
-  // 8. Business Model Canvas Expander
-  document.querySelectorAll('.bmc-box').forEach(box => {
-    box.addEventListener('click', () => {
-      box.classList.toggle('expanded');
-    });
-  });
-});
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  function animateCounter(el) {
-    const target = parseFloat(el.getAttribute('data-target'));
-    const isFloat = !Number.isInteger(target);
-    const duration = 2000;
-    const step = target / (duration / 16);
-    let current = 0;
-    const update = () => {
-      current += step;
-      if (current < target) {
-        el.innerText = isFloat ? current.toFixed(1) : Math.ceil(current).toLocaleString();
-        requestAnimationFrame(update);
-      } else {
-        el.innerText = (isFloat ? target.toFixed(1) : target.toLocaleString()) + (el.getAttribute('data-suffix') || '');
-      }
-    };
-    update();
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        if (entry.target.classList.contains('counter')) {
-          animateCounter(entry.target);
-          entry.target.classList.remove('counter');
-        }
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.counter').forEach(el => observer.observe(el));
-});
-
-
-// V2 Research Drawer and Analytics Logic
-document.addEventListener('DOMContentLoaded', () => {
-  const drawer = document.getElementById('research-drawer');
-  const drawerTitle = document.getElementById('drawer-title');
-  const drawerBody = document.getElementById('drawer-body');
-  const closeDrawer = document.getElementById('close-drawer');
-  
-  let setuData = null;
-  let currentChart = null;
-
-  async function loadData() {
-    if (!setuData) {
-      try {
-        const response = await fetch('./data/setu_data.json');
-        setuData = await response.json();
-      } catch (err) {
-        console.error('Failed to load setu_data.json', err);
-      }
-    }
-    return setuData;
-  }
-
-  function destroyCurrentChart() {
-    if (currentChart) {
-      currentChart.destroy();
-      currentChart = null;
-    }
-  }
-
-  // Bind Explore More buttons
-  document.querySelectorAll('.explore-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const moduleName = btn.getAttribute('data-module');
-      const data = await loadData();
-      if (!data) return;
-
-      destroyCurrentChart();
-      drawer.classList.add('active');
-      renderModule(moduleName, data);
-    });
-  });
-
-  if(closeDrawer) {
-    closeDrawer.addEventListener('click', () => {
-      drawer.classList.remove('active');
-      destroyCurrentChart();
-    });
-  }
-
-  function renderModule(moduleName, data) {
-    if (moduleName === 'overview') {
-      drawerTitle.innerText = "Company Overview";
-      drawerBody.innerHTML = `
-        <div class="v2-kpi-grid">
-          <div class="v2-kpi-card">
-            <div class="v2-kpi-lbl">Legal Name</div>
-            <div class="v2-kpi-val" style="font-size:0.9rem;">${data.overview.legalName}</div>
-          </div>
-          <div class="v2-kpi-card">
-            <div class="v2-kpi-lbl">Founded</div>
-            <div class="v2-kpi-val">${data.overview.founded}</div>
-          </div>
-          <div class="v2-kpi-card">
-            <div class="v2-kpi-lbl">Headquarters</div>
-            <div class="v2-kpi-val" style="font-size:0.9rem;">${data.overview.headquarters}</div>
-          </div>
-          <div class="v2-kpi-card">
-            <div class="v2-kpi-lbl">Valuation</div>
-            <div class="v2-kpi-val">${data.overview.latestValuation}</div>
-          </div>
-          <div class="v2-kpi-card">
-            <div class="v2-kpi-lbl">Total Funding</div>
-            <div class="v2-kpi-val">${data.overview.totalFunding}</div>
-          </div>
-          <div class="v2-kpi-card">
-            <div class="v2-kpi-lbl">Status</div>
-            <div class="v2-kpi-val" style="font-size:0.9rem; color:#48bb78;">${data.overview.companyStatus}</div>
-          </div>
-        </div>
-
-        <div class="v2-section-title">Milestones & History</div>
-        <div class="v2-timeline-vertical">
-          ${data.history.map(h => `
-            <div class="v2-timeline-item">
-              <div class="v2-timeline-year">${h.year}</div>
-              <div style="font-weight:600; font-size:0.9rem; margin-bottom:4px;">${h.event}</div>
-              <div style="font-size:0.8rem; color:#a0aec0;">${h.detail}</div>
-            </div>
-          `).join('')}
-        </div>
-
-        <div class="v2-section-title">Citations & References</div>
-        <div class="v2-ref-box">
-          ${data.references.map(r => `<div style="margin-bottom:8px;">• ${r}</div>`).join('')}
-        </div>
-      `;
-    }
-
-    else if (moduleName === 'problem') {
-      drawerTitle.innerText = "Detailed Problem Study";
-      drawerBody.innerHTML = `
-        <div style="margin-bottom:20px; font-size:0.9rem; color:#a0aec0;">
-          Before Setu, integrating banking services into apps required direct host-to-host connections. These integrations suffered from deep friction points:
-        </div>
-
-        <div class="v2-section-title">Traditional vs Setu Workflow</div>
-        <table class="v2-table">
-          <thead>
-            <tr>
-              <th>Friction Area</th>
-              <th>Without Setu</th>
-              <th>With Setu</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Workflow</strong></td>
-              <td>${data.problem.before.process}</td>
-              <td>${data.problem.after.process}</td>
-            </tr>
-            <tr>
-              <td><strong>Time Delay</strong></td>
-              <td style="color:#e53e3e;">${data.problem.before.time}</td>
-              <td style="color:#48bb78;">${data.problem.after.time}</td>
-            </tr>
-            <tr>
-              <td><strong>Cost Implication</strong></td>
-              <td>${data.problem.before.cost}</td>
-              <td>${data.problem.after.cost}</td>
-            </tr>
-            <tr>
-              <td><strong>Compliance</strong></td>
-              <td>${data.problem.before.regulation}</td>
-              <td>${data.problem.after.regulation}</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="v2-section-title">Why Legacy Systems Failed</div>
-        <div style="font-size:0.85rem; color:#cbd5e0; margin-bottom:16px;">
-          Core Banking Systems (CBS) operate on ancient transaction engines built on mainframe servers. They lack modern HTTP APIs, rely heavily on custom ISO 8583 message layers, and require leased lines. This technical debt effectively blocked small startups from embedding financial services.
-        </div>
-      `;
-    }
-
-    else if (moduleName === 'founders') {
-      drawerTitle.innerText = "Founder Deep Dives";
-      drawerBody.innerHTML = `
-        <div style="margin-bottom:20px; font-size:0.9rem; color:#a0aec0;">
-          Profiles of the innovators behind the API bridge:
-        </div>
-
-        ${data.founders.map(f => `
-          <div style="background:rgba(255,255,255,0.02); padding:16px; border-radius:12px; margin-bottom:20px; border:1px solid rgba(255,255,255,0.05);">
-            <h3 style="color:#fff; margin-bottom:4px;">${f.name}</h3>
-            <div style="font-size:0.8rem; color:var(--primary-color); font-weight:600; margin-bottom:12px;">${f.title}</div>
-            <p style="font-size:0.85rem; margin-bottom:12px;">${f.bio}</p>
-            <div style="font-size:0.8rem; color:#a0aec0;">
-              <strong>Education:</strong> ${f.education}<br>
-              <strong>Past Roles:</strong> ${f.previousRoles}<br>
-              <strong>Current Status:</strong> ${f.currentRole}
-            </div>
-          </div>
-        `).join('')}
-
-        <div class="v2-section-title">The Public Connection Graph</div>
-        <div style="font-size:0.85rem; color:#cbd5e0;">
-          Both founders operated inside <strong>iSPIRT</strong> (the volunteer think-tank behind India's digital public goods) and collaborated directly on building the developer community for <strong>UPI</strong>. Their shared realization that private tech companies struggled to connect with public rails directly inspired the inception of Setu.
-        </div>
-      `;
-    }
-
-    else if (moduleName === 'business_model') {
-      drawerTitle.innerText = "Business Canvas & Unit Economics";
-      drawerBody.innerHTML = `
-        <div class="v2-section-title">Unit Economics</div>
-        <div style="font-size:0.85rem; color:#cbd5e0; margin-bottom:24px;">
-          Setu operates on a transaction-based subscription hybrid model. 
-          <ul>
-            <li style="margin-bottom:8px;"><strong>Payments (Collect/BBPS):</strong> Flat pricing per successful API call (~INR 1-5) or a % cut on high-ticket merchant auto-debits.</li>
-            <li style="margin-bottom:8px;"><strong>Identity & KYC:</strong> Micro-payments per verify API call (e.g. INR 1 for PAN, INR 5 for Aadhaar eSign).</li>
-            <li style="margin-bottom:8px;"><strong>Account Aggregator:</strong> SaaS subscription package for lending underwriters to query bank accounts.</li>
-          </ul>
-        </div>
-
-        <div class="v2-section-title">Value Mix Canvas</div>
-        <div style="font-size:0.85rem; color:#cbd5e0;">
-          <strong>Key Value Drivers:</strong>
-          <table class="v2-table">
-            <tr>
-              <td><strong>Partners</strong></td>
-              <td>Axis, HDFC, Yes Bank, NPCI</td>
-            </tr>
-            <tr>
-              <td><strong>Resources</strong></td>
-              <td>Direct API bridges, Bank CBS lines</td>
-            </tr>
-            <tr>
-              <td><strong>Cost Structure</strong></td>
-              <td>Direct banking costs (70% of cost base), Tech infra, Compliance audits</td>
-            </tr>
-          </table>
-        </div>
-      `;
-    }
-
-    else if (moduleName === 'products') {
-      drawerTitle.innerText = "Product Suite Deep Dive";
-      drawerBody.innerHTML = `
-        <div style="margin-bottom:20px; font-size:0.9rem; color:#a0aec0;">
-          Setu's API products span identity verification, payments routing, and bank details fetching:
-        </div>
-
-        ${data.products.map(p => `
-          <div style="background:rgba(255,255,255,0.02); padding:16px; border-radius:12px; margin-bottom:16px; border:1px solid rgba(255,255,255,0.05);">
-            <h4 style="color:#fff; margin-bottom:4px;">${p.name}</h4>
-            <div style="font-size:0.8rem; color:var(--primary-color); font-weight:600; margin-bottom:8px;">Launched: ${p.launch}</div>
-            <p style="font-size:0.85rem; margin-bottom:8px;">${p.desc}</p>
-            <div style="font-size:0.8rem; color:#a0aec0;">
-              <strong>Pricing Model:</strong> ${p.pricing}<br>
-              <strong>Target Customers:</strong> ${p.customers}
-            </div>
-          </div>
-        `).join('')}
-      `;
-    }
-
-    else if (moduleName === 'scale') {
-      drawerTitle.innerText = "Scale & Ecosystem Map";
-      drawerBody.innerHTML = `
-        <div class="v2-section-title">Operational Scope</div>
-        <div style="font-size:0.85rem; color:#cbd5e0; margin-bottom:24px;">
-          With Pine Labs' backing, Setu APIs are integrated into India's largest merchant payment networks. 
-          <ul>
-            <li style="margin-bottom:8px;"><strong>API Volume:</strong> Processing over 40 million API queries monthly.</li>
-            <li style="margin-bottom:8px;"><strong>Partner Network:</strong> Directly connected with over 15 major public and private banks.</li>
-            <li style="margin-bottom:8px;"><strong>Fintechs Enabled:</strong> 300+ live digital consumer platforms (including neo-banks, lending startups, and wealth apps).</li>
-          </ul>
-        </div>
-      `;
-    }
-
-    else if (moduleName === 'status') {
-      drawerTitle.innerText = "Financial & Competitor Matrix";
-      drawerBody.innerHTML = `
-        <div class="v2-section-title">Public Financial Performance (FY20 - FY23)</div>
-        <div class="v2-chart-container">
-          <canvas id="revenueChart" width="400" height="250"></canvas>
-        </div>
-
-        <div class="v2-section-title">SWOT Strategic Context</div>
-        <div style="font-size:0.85rem; color:#cbd5e0; margin-bottom:24px;">
-          Setu's high-tech infrastructure makes them the ultimate acquisition play for Pine Labs, but their standalone P&L shows wide losses (INR -31.7 Cr in FY23) due to heavy investments in product building and compliance.
-        </div>
-
-        <div class="v2-section-title">Competitor Comparison</div>
-        <table class="v2-table">
-          <thead>
-            <tr>
-              <th>Competitor</th>
-              <th>Strength</th>
-              <th>Weakness</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${data.competitors.map(c => `
-              <tr>
-                <td><strong>${c.name}</strong></td>
-                <td>${c.strengths}</td>
-                <td>${c.weaknesses}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
-
-      // Render Chart.js line graph for revenue vs losses
-      const ctx = document.getElementById('revenueChart').getContext('2d');
-      const years = data.financials.revenueHistory.map(r => r.year);
-      const revs = data.financials.revenueHistory.map(r => parseFloat(r.revenue.replace('INR ', '').replace(' Cr', '')));
-      const losses = data.financials.revenueHistory.map(r => parseFloat(r.loss.replace('INR ', '').replace(' Cr', '')));
-
-      currentChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: years,
-          datasets: [
-            {
-              label: 'Revenue (INR Cr)',
-              data: revs,
-              borderColor: '#42cacd',
-              backgroundColor: 'rgba(66,202,205,0.1)',
-              borderWidth: 2,
-              fill: true
-            },
-            {
-              label: 'Losses (INR Cr)',
-              data: losses,
-              borderColor: '#e53e3e',
-              backgroundColor: 'rgba(229,62,62,0.1)',
-              borderWidth: 2,
-              fill: true
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              grid: { color: 'rgba(255,255,255,0.05)' },
-              ticks: { color: '#a0aec0' }
-            },
-            x: {
-              grid: { color: 'rgba(255,255,255,0.05)' },
-              ticks: { color: '#a0aec0' }
-            }
-          },
-          plugins: {
-            legend: {
-              labels: { color: '#fff' }
-            }
-          }
-        }
-      });
-    }
-  }
 });

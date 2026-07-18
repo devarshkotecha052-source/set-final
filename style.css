@@ -326,67 +326,96 @@ a { color: var(--primary-color); text-decoration: none; transition: var(--transi
 @keyframes gradientMove { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
 
 
-/* Research Drawer V2 Style */
-.research-drawer {
-  position: fixed;
-  top: 0;
-  right: -550px;
-  width: 500px;
-  height: 100%;
-  background: rgba(9, 16, 22, 0.98);
-  backdrop-filter: blur(12px);
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: -15px 0 45px rgba(0, 0, 0, 0.6);
-  z-index: 1050;
-  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 30px;
-  overflow-y: auto;
-  color: #f7fafc;
-}
-.research-drawer.active {
-  right: 0;
-}
-.drawer-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Research V2.5 Tab & Subheading Layout Style */
+.enc-tabs-container {
+  position: sticky;
+  top: 70px;
+  background: rgba(9, 16, 22, 0.95);
+  z-index: 100;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 20px;
-  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+  margin-bottom: 40px;
+  padding: 12px 0;
 }
-.close-drawer {
-  font-size: 2rem;
+.enc-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.enc-tabs::-webkit-scrollbar {
+  display: none;
+}
+.enc-tab {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a0aec0;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
-  color: #718096;
-  transition: color 0.3s;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+  white-space: nowrap;
 }
-.close-drawer:hover {
+.enc-tab i {
+  font-size: 0.85rem;
+}
+.enc-tab.active, .enc-tab:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: rgba(66, 202, 205, 0.05);
+}
+
+.enc-panel {
+  display: none;
+  animation: fadeIn 0.4s ease forwards;
+}
+.enc-panel.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.enc-subheading-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+.sub-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: rgba(66, 202, 205, 0.08);
+  position: absolute;
+  top: 12px;
+  right: 24px;
+  pointer-events: none;
+  font-family: 'Inter', sans-serif;
+}
+.sub-title {
+  font-size: 1.4rem;
+  font-weight: 700;
   color: #fff;
-}
-.drawer-body {
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-/* Custom Scrollbar for Drawer */
-.research-drawer::-webkit-scrollbar {
-  width: 6px;
-}
-.research-drawer::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-}
-.research-drawer::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 3px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 12px;
 }
 
-/* V2 Dashboard UI Elements */
+/* V2 Dashboard UI Elements inside subheadings */
 .v2-kpi-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-bottom: 24px;
 }
 .v2-kpi-card {
   background: rgba(255, 255, 255, 0.03);
@@ -422,6 +451,7 @@ a { color: var(--primary-color); text-decoration: none; transition: var(--transi
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #cbd5e0;
 }
 .v2-table th {
   color: #a0aec0;
@@ -432,16 +462,6 @@ a { color: var(--primary-color); text-decoration: none; transition: var(--transi
 }
 .v2-table tr:hover {
   background: rgba(255, 255, 255, 0.02);
-}
-
-.v2-section-title {
-  font-size: 1.1rem;
-  margin-top: 28px;
-  margin-bottom: 16px;
-  color: var(--primary-color);
-  font-weight: 600;
-  border-left: 3px solid var(--primary-color);
-  padding-left: 12px;
 }
 
 .v2-timeline-vertical {
@@ -471,19 +491,16 @@ a { color: var(--primary-color); text-decoration: none; transition: var(--transi
   margin-bottom: 4px;
 }
 
-/* Radar/Chart Wrapper */
 .v2-chart-container {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
   padding: 16px;
-  margin-bottom: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Reference block */
 .v2-ref-box {
   background: rgba(255, 255, 255, 0.01);
   border: 1px dashed rgba(255, 255, 255, 0.1);
@@ -491,11 +508,4 @@ a { color: var(--primary-color); text-decoration: none; transition: var(--transi
   border-radius: 8px;
   font-size: 0.8rem;
   color: #a0aec0;
-}
-
-@media (max-width: 550px) {
-  .research-drawer {
-    width: 100%;
-    right: -100%;
-  }
 }
