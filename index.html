@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Setu | Interactive Research Encyclopedia</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/set-final/assets/index-DarJxMPs.js"></script>
-  <link rel="stylesheet" crossorigin href="/set-final/assets/index-CxM8BTEw.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="module" crossorigin src="/set-final/assets/index-T73vMJJM.js"></script>
+  <link rel="stylesheet" crossorigin href="/set-final/assets/index-CzUvPfhf.css">
 </head>
 <body>
 
@@ -16,18 +18,13 @@
         <img src="./setu-logo.svg" alt="Setu Logo" style="height: 28px;" />
       </a>
       <div class="nav-links">
-        <a href="#friction">The Problem</a>
-        <a href="#founders">The Founders</a>
-        <a href="#model">Business Model</a>
-        <a href="#experience">Experience Setu</a>
-        <a href="#scale">Geography & Scale</a>
-        <a href="#status">Status Today</a>
+        <a href="#encyclopedia">Research Portal</a>
       </div>
       <a href="https://setu.co" target="_blank" class="btn-primary" style="text-decoration: none; font-size: 0.85rem; padding: 8px 16px;">View Official Site</a>
     </div>
   </nav>
 
-  <!-- Hero with API Console -->
+  <!-- Hero -->
   <header class="hero">
     <div class="orbs">
       <div class="orb orb-1"></div>
@@ -42,8 +39,7 @@
           <div><h3 style="color:#fff; font-size: 2rem;" class="counter" data-target="300">0</h3><span style="color:#a0aec0">Integrations</span></div>
           <div><h3 style="color:#fff; font-size: 2rem;">$75M</h3><span style="color:#a0aec0">Acquisition</span></div>
         </div>
-        <a href="#friction" class="btn-primary">Initialize Research</a>
-        <button class="btn-secondary explore-btn" data-module="overview" style="margin-left: 12px; background: rgba(255,255,255,0.05); color:#fff; border: 1px solid rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 6px; cursor:pointer; font-weight:600; font-size: 1rem; transition: background 0.3s;">Explore Company Dashboard</button>
+        <a href="#encyclopedia" class="btn-primary">Initialize Research</a>
       </div>
     </div>
   </header>
@@ -62,326 +58,408 @@
       <img src="./partners/driveu.427f366b.png" alt="DriveU">
       <img src="./partners/muthoot.png" alt="Muthoot">
       <img src="./partners/d91.c6714fcd.png" alt="D91">
-      <!-- Duplicate for infinite scroll -->
+      
       <img src="./partners/kissht.a67e9cf5.png" alt="Kissht">
       <img src="./partners/iifl.cc616d4f.png" alt="IIFL">
       <img src="./partners/kotak.a0d6769b.png" alt="Kotak">
     </div>
   </div>
 
-  <!-- 1. Friction -->
-  <section id="friction" class="section">
-    <div class="container friction-grid">
-      <div class="fade-up">
-        <span class="sec-tag">The Problem</span>
-        <h2 class="sec-title">The Integration Chasm</h2>
-        <p>Before Setu, embedding financial features meant connecting to ancient banking infrastructure. It was a massive bottleneck for India's digital startups.</p>
-        
-        <div class="pain-grid" style="margin-top: 32px;">
-          <div class="pain-card stagger-item d-1">
-            <h4 style="color: #e53e3e;">6-9 Months</h4>
-            <p style="font-size: 0.9rem;">Average time for a startup to integrate legacy bank APIs.</p>
-          </div>
-          <div class="pain-card stagger-item d-2">
-            <h4 style="color: #e53e3e;">High CaC</h4>
-            <p style="font-size: 0.9rem;">Customer acquisition costs were astronomically high due to manual KYC.</p>
-          </div>
-          <div class="pain-card stagger-item d-3">
-            <h4 style="color: #e53e3e;">Compliance</h4>
-            <p style="font-size: 0.9rem;">Navigating RBI and NPCI regulations required entire legal teams.</p>
-          </div>
-          <div class="pain-card stagger-item d-4">
-            <h4 style="color: #42cacd;">2 Hours</h4>
-            <p style="font-size: 0.9rem;">Setu's solution: standardized, sachetised APIs reducing integration to hours.</p>
-          </div>
+  <!-- Unified Encyclopedia Section -->
+  <section id="encyclopedia" class="section">
+    <div class="container">
+      
+      <!-- Top level grouped Category Tabs -->
+      <div class="enc-tabs-container">
+        <div class="enc-tabs">
+          <button class="enc-tab active" data-tab="corporate"><i class="fas fa-building"></i> Corporate & History</button>
+          <button class="enc-tab" data-tab="value"><i class="fas fa-exchange-alt"></i> Value & Experience</button>
+          <button class="enc-tab" data-tab="financials"><i class="fas fa-chart-line"></i> Business & Scale</button>
+          <button class="enc-tab" data-tab="technology"><i class="fas fa-microchip"></i> Tech & Governance</button>
+          <button class="enc-tab" data-tab="strategy"><i class="fas fa-shield-alt"></i> Strategy & News</button>
         </div>
       </div>
 
-      <div class="fade-up">
-        <h4>Before vs. After Setu</h4>
-        <p style="font-size: 0.9rem; margin-bottom: 16px;">Slide to compare the industry workflow.</p>
-        <div class="slider-container">
-          <div class="slider-img slider-before">
-            <h3>Without Setu (Before)</h3>
-            <ul style="margin-top:16px; padding-left:20px;">
-              <li>Direct bank integration required</li>
-              <li>Soap APIs & XML files</li>
-              <li>Months of legal contracts</li>
+      <!-- Tab Panel 1: Corporate & History -->
+      <div class="enc-panel active" id="panel-corporate">
+        
+        <!-- 1. Company Overview & Snapshot -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">01</div>
+          <h3 class="sub-title">Company Overview & Snapshot</h3>
+          <div class="v2-kpi-grid">
+            <div class="v2-kpi-card">
+              <div class="v2-kpi-lbl">Company Legal Name</div>
+              <div class="v2-kpi-val" style="font-size:0.95rem;">BrokenTusk Technologies Pvt. Ltd.</div>
+            </div>
+            <div class="v2-kpi-card">
+              <div class="v2-kpi-lbl">Tagline</div>
+              <div class="v2-kpi-val" style="font-size:0.95rem;">API infrastructure for beautiful financial journeys.</div>
+            </div>
+            <div class="v2-kpi-card">
+              <div class="v2-kpi-lbl">Headquarters</div>
+              <div class="v2-kpi-val">Bengaluru, Karnataka, India</div>
+            </div>
+            <div class="v2-kpi-card">
+              <div class="v2-kpi-lbl">Status</div>
+              <div class="v2-kpi-val" style="color:#38a169;">Active operating subsidiary</div>
+            </div>
+            <div class="v2-kpi-card">
+              <div class="v2-kpi-lbl">Valuation</div>
+              <div class="v2-kpi-val">$70M - $75M (at acquisition)</div>
+            </div>
+            <div class="v2-kpi-card">
+              <div class="v2-kpi-lbl">Total Funding</div>
+              <div class="v2-kpi-val">$19 Million</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Company History & Evolution Timeline -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">02</div>
+          <h3 class="sub-title">Company History & Evolution Timeline</h3>
+          <div class="v2-timeline-vertical">
+            <div class="v2-timeline-item">
+              <div class="v2-timeline-year">2018</div>
+              <div style="font-weight:600; font-size:0.95rem; margin-bottom:4px;">Setu Founded</div>
+              <div style="font-size:0.85rem; color:#a0aec0;">Co-founded in Bengaluru by Sahil Kini and Nikhil Kumar.</div>
+            </div>
+            <div class="v2-timeline-item">
+              <div class="v2-timeline-year">2019</div>
+              <div style="font-weight:600; font-size:0.95rem; margin-bottom:4px;">Seed Funding ($4M)</div>
+              <div style="font-size:0.85rem; color:#a0aec0;">Raised Seed funding led by Lightspeed India Partners and Bharat Innovation Fund.</div>
+            </div>
+            <div class="v2-timeline-item">
+              <div class="v2-timeline-year">2020</div>
+              <div style="font-weight:600; font-size:0.95rem; margin-bottom:4px;">Series A Funding ($15M)</div>
+              <div style="font-size:0.85rem; color:#a0aec0;">Raised Series A led by Falcon Edge Capital to scale APIs.</div>
+            </div>
+            <div class="v2-timeline-item">
+              <div class="v2-timeline-year">2022</div>
+              <div style="font-weight:600; font-size:0.95rem; margin-bottom:4px;">Acquisition by Pine Labs ($70M-75M)</div>
+              <div style="font-size:0.85rem; color:#a0aec0;">Pine Labs acquires Setu to build out its open banking and embedded finance APIs.</div>
+            </div>
+            <div class="v2-timeline-item">
+              <div class="v2-timeline-year">2025</div>
+              <div style="font-weight:600; font-size:0.95rem; margin-bottom:4px;">CEO Appointment</div>
+              <div style="font-size:0.85rem; color:#a0aec0;">Co-founder Sahil Kini appointed Chief Executive Officer of the Reserve Bank Innovation Hub (RBIH).</div>
+            </div>
+            <div class="v2-timeline-item">
+              <div class="v2-timeline-year">2026</div>
+              <div style="font-weight:600; font-size:0.95rem; margin-bottom:4px;">Leadership Changes</div>
+              <div style="font-size:0.85rem; color:#a0aec0;">Nikhil Kumar steps down as Chief Evangelist to focus on global DPI initiatives.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Founders & Leadership Profile -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">03</div>
+          <h3 class="sub-title">Founders & Leadership Profile</h3>
+          <div class="founder-layout" style="margin-top:20px;">
+            <div class="f-tabs">
+              <div class="f-tab active" data-target="sahil-inline">
+                <img src="https://ui-avatars.com/api/?name=Sahil+Kini&background=42cacd&color=fff" alt="SK">
+                Sahil Kini
+              </div>
+              <div class="f-tab" data-target="nikhil-inline">
+                <img src="https://ui-avatars.com/api/?name=Nikhil+Kumar&background=091016&color=fff" alt="NK">
+                Nikhil Kumar
+              </div>
+              <div class="f-tab" data-target="vision-inline">
+                <img src="https://ui-avatars.com/api/?name=S+V&background=e0e6ed&color=000" alt="SV">
+                Shared Vision
+              </div>
+            </div>
+            
+            <div class="f-bios-container">
+              <div class="f-bio active" id="bio-sahil-inline">
+                <h3>Sahil Kini</h3>
+                <p style="color: var(--primary-color); font-weight: 600; margin-bottom: 16px;">Co-Founder & Former CEO</p>
+                <p style="font-size: 0.9rem;">Sahil Kini earned a B.Tech in Metallurgy and Materials Engineering from IIT Madras. He worked at McKinsey, Ezetap, Titan, and Aspada Investments. Under his leadership, Setu grew into a pioneer in open banking API infrastructure, culminating in its acquisition by Pine Labs. In 2025, he was appointed CEO of the Reserve Bank Innovation Hub (RBIH).</p>
+              </div>
+              <div class="f-bio" id="bio-nikhil-inline">
+                <h3>Nikhil Kumar</h3>
+                <p style="color: var(--primary-color); font-weight: 600; margin-bottom: 16px;">Co-Founder & Former Chief Evangelist</p>
+                <p style="font-size: 0.9rem;">Nikhil Kumar was born in Kolar, Karnataka. An alumnus of Tally, Intuit, and Exotel, Nikhil served as a full-time Fellow at iSPIRT. He acted as the Head of Developer Ecosystem for IndiaStack and spearheaded the development of the BHIM UPI app in just 3 weeks after demonetization in 2016. He currently advises the World Bank and Gates Foundation.</p>
+              </div>
+              <div class="f-bio" id="bio-vision-inline">
+                <h3>The IndiaStack Connection</h3>
+                <p style="font-size: 0.9rem;">Both founders met while operating at the core of India's Digital Public Infrastructure (DPI). They realized that while the government built the rails (UPI, Aadhaar, Account Aggregator), private companies couldn't access them easily. Setu was born to be the missing "bridge" between these public goods and private innovation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 21. Acquisitions, Mergers & Expansion Strategy -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">21</div>
+          <h3 class="sub-title">Acquisitions, Mergers & Expansion Strategy</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            In June 2022, **Pine Labs** acquired Setu in a cash-and-stock transaction valued at **$70M–$75M**. Setu continues to operate as an active subsidiary within the Pine Labs ecosystem, leveraging Pine Labs’ massive base of merchants and banking partnerships. The merger enables Pine Labs to roll out robust embedded finance and open APIs under its Plural merchant suite.
+          </div>
+        </div>
+
+        <!-- 27. Interesting Facts, Insights & Company Culture -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">27</div>
+          <h3 class="sub-title">Interesting Facts, Insights & Company Culture</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            <ul>
+              <li style="margin-bottom: 12px;"><strong>The Name:</strong> "Setu" is the Sanskrit word for *bridge*, highlighting the company's core mission to act as a bridge between banks and developers.</li>
+              <li style="margin-bottom: 12px;"><strong>BHIM App Roots:</strong> Co-founder Nikhil Kumar led the build sprint of the BHIM app in late 2016, completing the core app in just three weeks.</li>
+              <li style="margin-bottom: 12px;"><strong>Developer Evangelism:</strong> Setu was one of the first Indian B2B companies to actively build a public sandbox environment accessible to anyone without legal paperwork, transforming developer onboarding in the country.</li>
             </ul>
           </div>
-          <div class="slider-img slider-after">
-            <h3>With Setu (After)</h3>
-            <ul style="margin-top:16px; padding-left:20px;">
-              <li>Unified REST APIs (JSON)</li>
-              <li>Self-serve sandbox portal</li>
-              <li>Plug-and-play compliance</li>
+        </div>
+
+      </div>
+
+      <!-- Tab Panel 2: Value & Experience -->
+      <div class="enc-panel" id="panel-value">
+        
+        <!-- 4. Problem Statement & Industry Friction -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">04</div>
+          <h3 class="sub-title">Problem Statement & Industry Friction</h3>
+          <div style="margin-bottom: 24px; font-size: 0.9rem; color: #a0aec0;">
+            Legacy integrations with core banking systems historically required weeks of legal negotiations, SOAP/XML handshakes, and proprietary VPN configurations.
+          </div>
+
+          <!-- Existing V1 Slider -->
+          <div class="slider-container" style="margin-bottom: 24px;">
+            <div class="slider-img slider-before">
+              <h3>Without Setu (Before)</h3>
+              <ul style="margin-top:16px; padding-left:20px;">
+                <li>Direct bank integration required</li>
+                <li>Soap APIs & XML files</li>
+                <li>Months of legal contracts</li>
+              </ul>
+            </div>
+            <div class="slider-img slider-after">
+              <h3>With Setu (After)</h3>
+              <ul style="margin-top:16px; padding-left:20px;">
+                <li>Unified REST APIs (JSON)</li>
+                <li>Self-serve sandbox portal</li>
+                <li>Plug-and-play compliance</li>
+              </ul>
+            </div>
+            <input type="range" min="0" max="100" value="50" class="slider-input" id="friction-slider">
+            <div class="slider-line" id="slider-line"></div>
+          </div>
+        </div>
+
+        <!-- 5. Products & Services Portfolio -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">05</div>
+          <h3 class="sub-title">Products & Services Portfolio</h3>
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin-top:16px;">
+            <div style="background:rgba(255,255,255,0.02); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.05);">
+              <h4 style="color:#fff; margin-bottom:8px;">Setu Collect</h4>
+              <p style="font-size:0.85rem; color:#a0aec0;">Unified UPI link-based payment collections and auto-recurring mandates (UPI Autopay).</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.02); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.05);">
+              <h4 style="color:#fff; margin-bottom:8px;">Identity & KYC</h4>
+              <p style="font-size:0.85rem; color:#a0aec0;">Instant eSign, Aadhaar verification, PAN validation, and bank account name checks.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.02); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.05);">
+              <h4 style="color:#fff; margin-bottom:8px;">Account Aggregator (AA)</h4>
+              <p style="font-size:0.85rem; color:#a0aec0;">Consented fetch of structured financial data (statements, tax) for instant loan underwriting.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.02); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.05);">
+              <h4 style="color:#fff; margin-bottom:8px;">BBPS Collections</h4>
+              <p style="font-size:0.85rem; color:#a0aec0;">Connect directly to the Bharat Bill Pay System to aggregate loan, insurance, or utility payments.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. Customer Segments & User Personas -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">12</div>
+          <h3 class="sub-title">Customer Segments & User Personas</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Setu primarily services three distinct customer profiles:
+            <ul>
+              <li style="margin-bottom:8px;"><strong>Fintech Developers:</strong> Build checkouts, bank mandates, or onboarding flows using Setu's plug-and-play SDKs.</li>
+              <li style="margin-bottom:8px;"><strong>Regulated Entities (Lenders/NBFCs):</strong> Use the Account Aggregator APIs to analyze bank statements and make real-time credit decisions.</li>
+              <li style="margin-bottom:8px;"><strong>Partner Banks:</strong> Co-develop white-label API gateways to securely monetize their legacy Core Banking Systems.</li>
             </ul>
           </div>
-          <input type="range" min="0" max="100" value="50" class="slider-input" id="friction-slider">
-          <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="problem" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Detailed Problem Study</button></div>
-          <div class="slider-line" id="slider-line"></div>
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- 2. Founders -->
-  <section id="founders" class="section" style="background: #f9fbfd;">
-    <div class="container fade-up">
-      <span class="sec-tag">The Builders</span>
-      <h2 class="sec-title">Architects of the India Stack</h2>
-      
-      <div class="founder-layout">
-        <div class="f-tabs">
-          <div class="f-tab active" data-target="sahil">
-            <img src="https://ui-avatars.com/api/?name=Sahil+Kini&background=42cacd&color=fff" alt="SK">
-            Sahil Kini
-          </div>
-          <div class="f-tab" data-target="nikhil">
-            <img src="https://ui-avatars.com/api/?name=Nikhil+Kumar&background=091016&color=fff" alt="NK">
-            Nikhil Kumar
-          </div>
-          <div class="f-tab" data-target="vision">
-            <img src="https://ui-avatars.com/api/?name=S+V&background=e0e6ed&color=000" alt="SV">
-            Shared Vision
-          </div>
-        </div>
-        
-        <div class="f-bios-container">
-          <!-- Bio 1 -->
-          <div class="f-bio active" id="bio-sahil">
-            <h3>Sahil Kini</h3>
-            <p style="color: var(--primary-color); font-weight: 600; margin-bottom: 16px;">Co-Founder & CEO (Former)</p>
-            <p>Sahil was deeply involved in building India's foundational digital identity infrastructure. His deep technical and regulatory knowledge paved the way for open banking.</p>
-            <div class="f-timeline">
-              <div class="f-time-item"><strong>UIDAI / Aadhaar:</strong> Core contributor to the world's largest biometric ID system.</div>
-              <div class="f-time-item"><strong>Aspada Investments:</strong> Principal, investing in early-stage tech.</div>
-              <div class="f-time-item"><strong>2026:</strong> Appointed CEO of the Reserve Bank Innovation Hub (RBIH).</div>
-            </div>
-          </div>
+        <!-- 22. Customer Journey & User Experience -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">22</div>
+          <h3 class="sub-title">Customer Journey & User Experience</h3>
+          <p style="font-size:0.9rem; color:#a0aec0; margin-bottom:24px;">Interact with the active simulator below to watch Setu orchestrate a KYC verification flow between a Fintech app and the government backend.</p>
           
-          <!-- Bio 2 -->
-          <div class="f-bio" id="bio-nikhil">
-            <h3>Nikhil Kumar</h3>
-            <p style="color: var(--primary-color); font-weight: 600; margin-bottom: 16px;">Co-Founder & Chief Evangelist (Former)</p>
-            <p>Nikhil was instrumental in the evangelization and rollout of UPI (Unified Payments Interface) and the broader India Stack ecosystems.</p>
-            <div class="f-timeline">
-              <div class="f-time-item"><strong>iSPIRT Foundation:</strong> Fellow, actively scaling India Stack adoption.</div>
-              <div class="f-time-item"><strong>Exotel:</strong> Early team member, scaling cloud telephony.</div>
-            </div>
-          </div>
-
-          <!-- Bio 3 -->
-          <div class="f-bio" id="bio-vision">
-            <h3>The Aadhaar & iSPIRT Connection</h3>
-            <p>Both founders met while operating at the very core of India's Digital Public Infrastructure (DPI). They realized that while the government built the rails (UPI, Aadhaar, Account Aggregator), private companies couldn't access them easily. Setu was born to be the missing "bridge" (Setu means bridge in Hindi) between these public goods and private innovation.</p>
-          </div>
-        </div>
-        <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="founders" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Founder Profiles</button></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Business Model -->
-  <section id="model" class="section">
-    <div class="container fade-up">
-      <span class="sec-tag">The Engine</span>
-      <h2 class="sec-title">Ecosystem & Business Model</h2>
-
-      <!-- Interactive Ecosystem Flow -->
-      <div class="eco-flow">
-        <div class="eco-node">
-          <h4>Customer Apps</h4>
-          <p style="font-size: 0.85rem;">Startups, Lending Apps, E-commerce</p>
-        </div>
-        <div class="eco-arrow"><div class="packet"></div></div>
-        <div class="eco-node" style="background: var(--primary-color); color: #fff; border-color: var(--primary-color);">
-          <h4 style="color: #fff;">Setu Platform</h4>
-          <p style="font-size: 0.85rem;">API Gateway & Compliance</p>
-        </div>
-        <div class="eco-arrow"><div class="packet"></div></div>
-        <div class="eco-node">
-          <h4>Regulated Entities</h4>
-          <p style="font-size: 0.85rem;">Banks, NBFCs, Mutual Funds</p>
-        </div>
-      </div>
-
-      <!-- Interactive BMC -->
-      <h3 style="margin-bottom: 24px;">Business Model Canvas (Click to expand)</h3>
-      <div class="bmc-grid">
-        <div class="bmc-box stagger-item d-1">
-          <h4>Revenue Streams</h4>
-          <p><strong>API Usage Fees:</strong> Per-transaction fee for payments.</p>
-          <p style="margin-top:12px; font-size:0.9rem; color:var(--text-tertiary);"><strong>Verification:</strong> Flat fee per KYC/Aadhaar check.<br><strong>Subscriptions:</strong> Monthly access fees for Account Aggregator modules.</p>
-        </div>
-        <div class="bmc-box stagger-item d-2">
-          <h4>Value Proposition</h4>
-          <p><strong>For Developers:</strong> Unified API, zero banking jargon, instant sandbox access.</p>
-          <p style="margin-top:12px; font-size:0.9rem; color:var(--text-tertiary);"><strong>For Banks:</strong> Access to thousands of tech startups without maintaining individual tech integrations.</p>
-        </div>
-        <div class="bmc-box stagger-item d-3">
-          <h4>Key Partners</h4>
-          <p><strong>Banks:</strong> Axis, ICICI, HDFC.</p>
-          <p style="margin-top:12px; font-size:0.9rem; color:var(--text-tertiary);"><strong>Regulators:</strong> NPCI, RBI, UIDAI.<br><strong>Tech Giants:</strong> Pine Labs (now parent company).</p>
-        </div>
-      </div>
-      <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="business_model" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Unit Economics & Canvas</button></div>
-    </div>
-  </section>
-
-  
-  <!-- Experience Setu Simulation -->
-  
-  <!-- Experience Setu Dual-Screen Simulation -->
-  
-  <!-- Experience Setu Premium V3 Simulation -->
-  
-  <!-- Experience Setu Premium V4 Simulation (Interactive) -->
-  <section id="experience" class="section" style="background: #ffffff; position: relative;">
-    <div class="container fade-up" style="max-width: 1600px; padding: 0 24px;">
-      
-      <div style="text-align: center; margin-bottom: 40px;">
-        <span class="sec-tag">Product Lab</span>
-        <h2 class="sec-title">The Setu Orchestration Engine</h2>
-        <p style="color: var(--text-tertiary); max-width: 700px; margin: 16px auto 0;">Interact with the mock application on the left to witness how Setu powers the complex financial infrastructure step-by-step.</p>
-        
-        <div class="scenario-selector v3-tabs" style="margin-top: 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
-          <button class="v3-tab active" data-scenario="kyc">🔐 KYC Verification</button>
-          <button class="v3-tab" data-scenario="aa">🏦 Account Aggregation</button>
-          <button class="v3-tab" data-scenario="payment">💸 UPI Payment</button>
-          <button class="v3-tab" data-scenario="statement">📊 Statement Fetch</button>
-          <button class="v3-tab" data-scenario="loan">💳 Loan Eligibility</button>
-          <button class="v3-tab" data-scenario="identity">👤 Identity Check</button>
-        </div>
-      </div>
-      
-      <div class="v3-sim-layout">
-        
-        <!-- LEFT: Phone Mockup (40%) -->
-        <div class="v3-phone-wrapper">
-          <div class="v3-phone">
-            <div class="v3-phone-glass-reflection"></div>
-            <div class="v3-phone-notch"></div>
-            <div class="v3-phone-screen" id="v3-app-screen">
-              <!-- Injected by JS -->
-            </div>
-          </div>
-        </div>
-        
-        <!-- RIGHT: Orchestration Engine (60%) -->
-        <div class="v3-backend-wrapper">
-          <div class="v3-orch-header" style="display: flex; justify-content: space-between; align-items: center;">
-            <div><span class="glow-dot"></span> SETU ORCHESTRATION ENGINE</div>
-            <button id="btn-next-step" class="v3-btn" style="width: auto; padding: 8px 24px; margin: 0; background: var(--primary-color); display: none; font-size: 0.8rem; box-shadow: 0 4px 15px rgba(66,202,205,0.4);">Next Step ➔</button>
-          </div>
-          
-          <!-- Architecture Diagram -->
-          <div class="v3-diagram-card">
-            <div class="v3-diagram-track" id="v3-diagram-track">
-              <!-- Nodes and Paths injected by JS based on scenario to keep HTML clean -->
-            </div>
-          </div>
-          
-          <!-- Bottom Grid: Explanations & Metrics -->
-          <div class="v3-bottom-grid">
-            
-            <div class="v3-expl-cards">
-              <div class="v3-expl-card">
-                <span class="v3-expl-label">What's Happening</span>
-                <p id="v3-what">Interact with the phone to begin.</p>
+          <!-- Grafted iPhone Simulator -->
+          <div class="sim-layout" style="display: flex; gap: 32px; background: #091016; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 24px; color:#fff;">
+            <!-- Left Side: Simulator Controls & Scenarios -->
+            <div class="sim-controls" style="flex: 1; border-right: 1px solid rgba(255,255,255,0.08); padding-right: 24px;">
+              <div class="control-group">
+                <label style="color:#a0aec0; font-size:0.8rem; font-weight:700;">Select Scenario</label>
+                <div class="v3-tabs-scenarios" style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">
+                  <button class="v3-tab active" data-scenario="kyc">Identity Verification</button>
+                  <button class="v3-tab" data-scenario="loan">Loan Journey</button>
+                  <button class="v3-tab" data-scenario="autopay">Autopay Setup</button>
+                </div>
               </div>
-              <div class="v3-expl-card">
-                <span class="v3-expl-label">Why?</span>
-                <p id="v3-why">-</p>
+              
+              <div class="step-tracker" id="v3-step-tracker" style="margin-top:24px;">
+                <!-- Dynamically populated steps -->
               </div>
-              <div class="v3-expl-card highlight">
-                <span class="v3-expl-label">Setu's Role</span>
-                <p id="v3-role">-</p>
+              
+              <div class="v3-sim-action-row" style="margin-top:24px; display:flex; gap:12px;">
+                <button class="btn-primary" id="btn-next-step" style="display:none; width:100%;">Next Step ➔</button>
               </div>
             </div>
             
-            <div class="v3-metrics-dashboard">
-              <div class="v3-metric">
-                <span class="v3-metric-val" id="met-api">0</span>
-                <span class="v3-metric-lbl">API Calls</span>
-              </div>
-              <div class="v3-metric">
-                <span class="v3-metric-val" id="met-lat">0ms</span>
-                <span class="v3-metric-lbl">Latency</span>
-              </div>
-              <div class="v3-metric">
-                <span class="v3-metric-val" id="met-suc">99.9%</span>
-                <span class="v3-metric-lbl">Success Rate</span>
-              </div>
-              <div class="v3-metric">
-                <span class="v3-metric-val" id="met-srv">0</span>
-                <span class="v3-metric-lbl">Services Sync</span>
+            <!-- Middle: Interactive Mobile Screen Mockup -->
+            <div class="sim-phone-wrapper" style="flex: 1.2; display: flex; justify-content: center; align-items: center;">
+              <div class="v3-phone-bezel">
+                <div class="v3-phone-notch"></div>
+                <div class="v3-phone-screen" id="v3-app-screen">
+                  <div class="v3-screen-empty">
+                    <p style="color:#a0aec0; text-align:center; padding: 0 20px;">Click a scenario tab on the left to initialize the simulation</p>
+                  </div>
+                </div>
               </div>
             </div>
             
-          </div>
-          
-        </div>
-        
-      </div>
-      
-      <!-- Celebration Overlay -->
-      <div class="v3-celebration" id="v3-celebration">
-        <div class="v3-confetti"></div>
-        <div class="v3-cel-card">
-          <div class="v3-cel-icon">🎉</div>
-          <h3>Journey Complete</h3>
-          <p>Congratulations! You just stepped through the entire orchestration flow.</p>
-          <div class="v3-cel-stats">
-            <div><strong id="cel-apis">7</strong><span>API Calls</span></div>
-            <div><strong id="cel-time">183ms</strong><span>Total Time</span></div>
-            <div><strong id="cel-nodes">5</strong><span>Systems Synced</span></div>
-          </div>
-          <button class="btn-primary" id="btn-v3-restart" style="margin-top:24px; width:100%;">Run Another Scenario</button>
-        </div>
-      </div>
-      <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="products" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Detailed Product Breakdown</button></div>
-    </div>
-  </section>
-  <!-- 4. Geography & Scale -->
-
-
-
-  
-  <section id="scale" class="section" style="background: #091016; color: #fff; position: relative; overflow: hidden;">
-    <div class="container fade-up" style="max-width: 1600px; padding: 0 24px;">
-      
-      <div style="text-align: center; margin-bottom: 40px;">
-        <span class="sec-tag" style="color:#62d3d6;">Geography & Scale</span>
-        <h2 class="sec-title" style="color: #fff;">The India Stack Engine</h2>
-        <p style="color: #a0aec0; max-width: 700px; margin: 16px auto 0;">Setu operates exclusively within India, building the connective tissue between citizens, fintechs, and the core India Stack.</p>
-        
-        <div class="geo-toggles" style="margin-top: 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;">
-          <button class="geo-chip active" data-layer="hq">Headquarters</button>
-          <button class="geo-chip active" data-layer="banks">Partner Banks</button>
-          <button class="geo-chip active" data-layer="stack">India Stack</button>
-          <button class="geo-chip active" data-layer="network">API Network</button>
-        </div>
-      </div>
-      
-      <div class="geo-layout">
-        
-        <!-- Interactive Map Container (Left, 60%) -->
-        <div class="geo-map-card">
-          <!-- Timeline Slider for Map -->
-          <div class="geo-timeline-control">
-            <input type="range" id="geo-year-slider" min="2018" max="2023" value="2023" step="1" />
-            <div class="geo-year-labels">
-              <span>2018</span><span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023+</span>
+            <!-- Right Side: Infrastructure Diagram & Logs -->
+            <div class="sim-visuals" style="flex: 1.5; display:flex; flex-direction:column; gap:16px;">
+              <div class="v3-diagram-container">
+                <h4 style="color:#a0aec0; font-size:0.8rem; font-weight:700; text-transform:uppercase; margin-bottom:12px;">Orchestration Infrastructure</h4>
+                <div class="v3-diagram-track" id="v3-diagram-track">
+                  <!-- Nodes generated dynamically -->
+                </div>
+              </div>
+              
+              <div class="v3-logs-container">
+                <h4 style="color:#a0aec0; font-size:0.8rem; font-weight:700; text-transform:uppercase; margin-bottom:8px;">Live Logs</h4>
+                <pre class="v3-logs" id="v3-logs">Waiting for simulation...</pre>
+              </div>
             </div>
           </div>
-          
-          <div class="geo-map-wrapper">
+        </div>
 
-            <div class="geo-map-inner" style="position: relative; width: 100%; aspect-ratio: 1 / 1; max-width: 600px; margin: 0 auto;">
-              <svg class="geo-base-map" viewBox="0 0 1024 1024" preserveAspectRatio="xMidYMid meet" style="width:100%; height:100%;">
-                <g transform="translate(0.000000,1024.000000) scale(0.100000,-0.100000)" stroke="none">
-                  <path class="india-outline" style="fill:rgba(66,202,205,0.1); stroke:rgba(66,202,205,0.3); stroke-width:15;" d="M4040 10225 c-14 -8 -40 -14 -58 -15 -64 0 -119 -22 -173 -66 -57
+        <!-- 23. Case Studies & Real-World Implementations -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">23</div>
+          <h3 class="sub-title">Case Studies & Real-World Implementations</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            <strong>Case Study: Personal Loan Approval in under 5 minutes</strong><br>
+            A leading consumer fintech app integrated Setu's Account Aggregator (AA) platform to replace manual PDF bank statement uploads. 
+            <ul>
+              <li><strong>Result:</strong> Loan underwriting latency dropped from 24 hours to 4 minutes.</li>
+              <li><strong>Impact:</strong> Customer drop-off rates fell by 37%, and credit approval accuracy increased by 14% due to structured data injection.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tab Panel 3: Business & Scale -->
+      <div class="enc-panel" id="panel-financials">
+        
+        <!-- 6. Business Model & Revenue Streams -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">06</div>
+          <h3 class="sub-title">Business Model & Revenue Streams</h3>
+          <!-- Grafted BMC -->
+          <div class="bmc-grid" style="margin-top:16px;">
+            <div class="bmc-box">
+              <h4>Revenue Streams</h4>
+              <p><strong>API Usage Fees:</strong> Flat-fee per KYC verification call, or slab/percentage transaction cut on UPI Collect auto-debits.</p>
+            </div>
+            <div class="bmc-box">
+              <h4>Value Proposition</h4>
+              <p><strong>Standardized APIs:</strong> Translates core banking complexity into standard REST/JSON formats, enabling integration in hours instead of months.</p>
+            </div>
+            <div class="bmc-box">
+              <h4>Key Partners</h4>
+              <p><strong>Banks & Regulators:</strong> Integrates directly with HDFC, Axis, and Yes Bank, complying with NPCI and RBI policies.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Financial Performance & Analysis -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">07</div>
+          <h3 class="sub-title">Financial Performance & Analysis</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; margin-top:16px; align-items: center;">
+            <div style="font-size:0.85rem; color:#cbd5e0;">
+              <strong>Historical Revenue & Losses (FY20 - FY23)</strong><br><br>
+              Setu's operating revenue has grown from INR 0.16 Cr in FY20 to INR 15.3 Cr in FY23. 
+              However, due to aggressive investments in direct leased lines, compliance architecture, and onboarding engineering talent, net losses widened to INR 31.7 Cr in FY23.
+            </div>
+            <div class="v2-chart-container">
+              <canvas id="revenueChart" width="350" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Funding History & Investment Rounds -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">08</div>
+          <h3 class="sub-title">Funding History & Investment Rounds</h3>
+          <table class="v2-table">
+            <thead>
+              <tr>
+                <th>Round</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Lead Investors</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Seed</strong></td>
+                <td>April 2019</td>
+                <td>$4 Million</td>
+                <td>Lightspeed India Partners, Bharat Innovation Fund</td>
+              </tr>
+              <tr>
+                <td><strong>Series A</strong></td>
+                <td>April 2020</td>
+                <td>$15 Million</td>
+                <td>Falcon Edge Capital, Lightspeed Venture Partners</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 9. Investors & Shareholding Structure -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">09</div>
+          <h3 class="sub-title">Investors & Shareholding Structure</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Prior to the 2022 acquisition, the company's equity was held by institutional investors Lightspeed and Falcon Edge (now Alpha Wave Global), the co-founders, and an ESOP pool. Since June 2022, **Pine Labs** owns 100% of Setu, retaining it as an independent legal subsidiary.
+          </div>
+        </div>
+
+        <!-- 10. IPO & Stock Market Performance -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">10</div>
+          <h3 class="sub-title">IPO & Stock Market Performance</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; font-style: italic;">
+            Not applicable. Setu is a private technology startup operating as a wholly owned subsidiary of Pine Labs.
+          </div>
+        </div>
+
+        <!-- 11. Geography, Scale & Global Presence -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">11</div>
+          <h3 class="sub-title">Geography, Scale & Global Presence</h3>
+          
+          <!-- Grafted Interactive Map -->
+          <div class="map-layout" style="display: grid; grid-template-columns: 2fr 1fr; gap: 32px; margin-top:20px;">
+            <div class="map-view" style="position: relative; background: #091016; border-radius: 16px; padding: 24px; min-height: 480px; overflow:hidden;">
+              <div class="map-container" id="geo-map-container" style="position: relative; width: 100%; height: 420px;">
+                <svg viewBox="0 0 1024 1024" class="map-svg" id="india-map" style="width:100%; height:100%; fill: #62d3d6; opacity: 0.3;"><g transform="translate(0.000000,1024.000000) scale(0.100000,-0.100000)" stroke="none">
+              <path d="M4040 10225 c-14 -8 -40 -14 -58 -15 -64 0 -119 -22 -173 -66 -57
 -47 -124 -77 -199 -89 -25 -4 -89 -29 -142 -56 l-97 -49 -17 -56 c-9 -33 -30
 -71 -49 -92 -31 -34 -35 -36 -121 -42 -71 -5 -104 -13 -158 -38 -83 -39 -130
 -40 -211 -7 -33 14 -91 30 -130 36 -38 6 -86 19 -106 29 -46 24 -69 26 -152
@@ -508,174 +586,244 @@ l30 31 -38 32 c-25 21 -46 31 -60 28 -13 -2 -29 3 -40 15 -18 20 -11 34 21 40
 35 83 25 20 49 29 87 33 30 3 56 8 58 10 3 2 11 37 18 76 16 81 36 111 76 111
 30 0 80 34 80 55 0 7 16 44 35 81 19 37 35 81 35 98 0 17 9 45 20 61 26 39 26
 75 1 75 -10 0 -38 -7 -61 -15 -23 -8 -44 -15 -45 -15 -1 0 -8 13 -15 29 -8 21
--21 32 -43 37 -43 9 -67 32 -67 64 0 15 -6 33 -14 39 -23 19 -79 23 -106 6z" />
-                </g>
+-21 32 -43 37 -43 9 -67 32 -67 64 0 15 -6 33 -14 39 -23 19 -79 23 -106 6z"/>
+            </g></svg>
                 
-                <!-- SVG Paths overlay for API network -->
-                <g class="geo-routes layer-network">
-                  <!-- BLR(307,737) to BOM(184,563) -->
-                  <path id="route-blr-bom" class="geo-path" d="M 307,737 Q 150,650 184,563" />
-                  <circle class="geo-packet"><animateMotion dur="2s" repeatCount="indefinite"><mpath href="#route-blr-bom"/></animateMotion></circle>
+                <!-- HTML Map overlays -->
+                <div class="geo-network-container" id="geo-network-container" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
+                  <svg id="network-lines-svg" style="width:100%; height:100%; position:absolute; top:0; left:0; pointer-events:none;"></svg>
                   
-                  <!-- BLR(307,737) to DEL(286,307) -->
-                  <path id="route-blr-del" class="geo-path" d="M 307,737 Q 200,500 286,307" />
-                  <circle class="geo-packet" style="animation-delay:0.5s;"><animateMotion dur="3s" repeatCount="indefinite"><mpath href="#route-blr-del"/></animateMotion></circle>
-                  
-                  <!-- BLR(307,737) to HYD(317,614) -->
-                  <path id="route-blr-hyd" class="geo-path" d="M 307,737 Q 350,650 317,614" />
-                  <circle class="geo-packet" style="animation-delay:1s;"><animateMotion dur="1.5s" repeatCount="indefinite"><mpath href="#route-blr-hyd"/></animateMotion></circle>
-                  
-                  <!-- BLR(307,737) to MAA(358,747) -->
-                  <path id="route-blr-maa" class="geo-path" d="M 307,737 Q 350,750 358,747" />
-                  <circle class="geo-packet" style="animation-delay:0.2s;"><animateMotion dur="1s" repeatCount="indefinite"><mpath href="#route-blr-maa"/></animateMotion></circle>
-                </g>
-              </svg>
-              
-              <!-- Absolute Hubs (Percentages of the 1:1 container exactly match the 1024 viewBox) -->
-              <div class="geo-hub hq layer-hq" style="top: 72%; left: 30%;" data-hub="blr" data-year="2018">
-                <div class="geo-beacon"></div>
-                <span>Bengaluru</span>
-              </div>
-              
-              <div class="geo-hub layer-banks" style="top: 55%; left: 18%;" data-hub="bom" data-year="2019">
-                <div class="geo-pulse"></div>
-                <span>Mumbai</span>
-              </div>
-              
-              <div class="geo-hub layer-stack" style="top: 30%; left: 28%;" data-hub="del" data-year="2020">
-                <div class="geo-pulse"></div>
-                <span>Delhi (UIDAI)</span>
-              </div>
-              
-              <div class="geo-hub layer-banks" style="top: 60%; left: 31%;" data-hub="hyd" data-year="2021">
-                <div class="geo-pulse"></div>
-                <span>Hyderabad</span>
-              </div>
-              
-              <div class="geo-hub layer-stack" style="top: 73%; left: 35%;" data-hub="maa" data-year="2022">
-                <div class="geo-pulse"></div>
-                <span>Chennai (AA)</span>
+                  <div class="map-pin hub-marker" id="hub-blr" data-hub="blr" data-year="2018" style="position: absolute; left: 42%; top: 75%;">
+                    <div class="pulse-ring"></div>
+                    <div class="hub-dot"></div>
+                  </div>
+                  <div class="map-pin hub-marker" id="hub-bom" data-hub="bom" data-year="2019" style="position: absolute; left: 32%; top: 62%;">
+                    <div class="pulse-ring"></div>
+                    <div class="hub-dot"></div>
+                  </div>
+                  <div class="map-pin hub-marker" id="hub-del" data-hub="del" data-year="2020" style="position: absolute; left: 40%; top: 32%;">
+                    <div class="pulse-ring"></div>
+                    <div class="hub-dot"></div>
+                  </div>
+                  <div class="map-pin hub-marker" id="hub-hyd" data-hub="hyd" data-year="2021" style="position: absolute; left: 45%; top: 65%;">
+                    <div class="pulse-ring"></div>
+                    <div class="hub-dot"></div>
+                  </div>
+                  <div class="map-pin hub-marker" id="hub-maa" data-hub="maa" data-year="2022" style="position: absolute; left: 46%; top: 76%;">
+                    <div class="pulse-ring"></div>
+                    <div class="hub-dot"></div>
+                  </div>
+                </div>
               </div>
             </div>
-
+            
+            <!-- Map Details Side Panel -->
+            <div class="map-details" style="display:flex; flex-direction:column;">
+              <h3 id="geo-info-title" style="color:#fff; margin-bottom:4px;">Ecosystem Footprint</h3>
+              <div class="geo-info-badge" id="geo-info-badge">Select a node</div>
+              <p class="geo-info-body" id="geo-info-desc" style="margin-top:16px; font-size:0.85rem; color:#cbd5e0; flex:1;">
+                Hover over the pulsing hubs on the India map or scrub the timeline below to watch the infrastructure scale.
+              </p>
+              
+              <!-- Map Timeline Controller -->
+              <div class="map-timeline-control" style="background:rgba(255,255,255,0.02); padding:16px; border-radius:12px; border:1px solid rgba(255,255,255,0.05);">
+                <label style="color:#cbd5e0; font-size:0.8rem; font-weight:700;">Infrastructure Timeline</label>
+                <div style="display:flex; align-items:center; gap:12px; margin-top:8px;">
+                  <span style="font-size:0.85rem; color:#a0aec0;">2018</span>
+                  <input type="range" min="2018" max="2023" value="2023" class="slider-input" id="geo-year-slider" style="flex:1;">
+                  <span style="font-size:0.85rem; color:#a0aec0;">2023</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
+      </div>
+
+      <!-- Tab Panel 4: Tech & Governance -->
+      <div class="enc-panel" id="panel-technology">
         
-        <!-- Contextual Info & KPIs (Right, 40%) -->
-        <div class="geo-info-card">
-          <div class="geo-info-header">
-            <h3 id="geo-info-title">The Setu Network</h3>
-            <span class="geo-info-badge" id="geo-info-year">2023 Operations</span>
+        <!-- 14. Technology Stack & Architecture -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">14</div>
+          <h3 class="sub-title">Technology Stack & Architecture</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Setu is built on a high-availability, microservices-driven cloud architecture:
+            <ul>
+              <li style="margin-bottom:8px;"><strong>Core Languages:</strong> Go and Python are utilized for low-latency API compilation and high-throughput routing.</li>
+              <li style="margin-bottom:8px;"><strong>Infrastructure:</strong> Hosted on AWS with direct site-to-site VPN tunnels to partner bank Core Banking Systems (CBS).</li>
+              <li style="margin-bottom:8px;"><strong>Security:</strong> All payloads encrypted at rest and in transit via TLS 1.3. API requests authenticate using HMAC signatures and JWT credentials.</li>
+            </ul>
           </div>
-          <div class="geo-info-body">
-            <p id="geo-info-desc">Setu's API infrastructure spans India's major financial and technological hubs. Hover over any node on the map to explore its specific role in the ecosystem, or use the timeline to trace our growth.</p>
+        </div>
+
+        <!-- 15. Regulatory Compliance & Governance -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">15</div>
+          <h3 class="sub-title">Regulatory Compliance & Governance</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Setu operates inside highly regulated Indian financial frameworks. It was one of the first platforms to secure the **Account Aggregator (AA) TSP (Technology Service Provider)** certificate. It complies fully with RBI data localization policies, and retains SOC 2 and PCI DSS compliance certificates for digital transaction processing.
           </div>
-          
-          <div class="geo-kpi-grid">
-            <div class="geo-kpi">
-              <div class="geo-kpi-ring">
-                <svg viewBox="0 0 36 36"><path class="circle" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /></svg>
-                <div class="geo-kpi-val">85+</div>
-              </div>
-              <span>API Endpoints</span>
+        </div>
+
+        <!-- 13. Partnerships & Strategic Alliances -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">13</div>
+          <h3 class="sub-title">Partnerships & Strategic Alliances</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Setu's scale is driven by its close integrations with financial institutions, including:
+            <ul>
+              <li><strong>Axis Bank:</strong> Co-created the platform's initial UPI collections and automated reconciliation engine.</li>
+              <li><strong>HDFC Bank & Yes Bank:</strong> Deployed secure corporate payment modules.</li>
+              <li><strong>NPCI (National Payments Corporation of India):</strong> Working closely on scaling Bharat Bill Pay System (BBPS) nodes.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tab Panel 5: Strategy & News -->
+      <div class="enc-panel" id="panel-strategy">
+        
+        <!-- 16. Competitor Analysis & Market Positioning -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">16</div>
+          <h3 class="sub-title">Competitor Analysis & Market Positioning</h3>
+          <table class="v2-table">
+            <thead>
+              <tr>
+                <th>Competitor</th>
+                <th>Core Offerings</th>
+                <th>Market Positioning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Razorpay (API)</strong></td>
+                <td>Payments checkout, KYC, Autopay</td>
+                <td>Massive corporate and merchant penetration, standard payment gateway leader.</td>
+              </tr>
+              <tr>
+                <td><strong>M2P Fintech</strong></td>
+                <td>Card issuing, core banking integrations</td>
+                <td>Deep infrastructure player specializing in bank ledger hosting and card issuing.</td>
+              </tr>
+              <tr>
+                <td><strong>Decentro</strong></td>
+                <td>KYC, UPI, ledger management APIs</td>
+                <td>Focuses on developer-friendly sandbox testing for early-stage startups.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 17. SWOT Analysis -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">17</div>
+          <h3 class="sub-title">SWOT Analysis</h3>
+          <div class="swot-grid" style="margin-top:16px;">
+            <div class="swot-card s">
+              <h4>Strengths</h4>
+              <p style="font-size:0.85rem; margin-top:8px;">Deep technical integrations with banks. Backed by Pine Labs' massive merchant footprint.</p>
             </div>
-            <div class="geo-kpi">
-              <div class="geo-kpi-ring">
-                <svg viewBox="0 0 36 36"><path class="circle" stroke-dasharray="99, 100" style="stroke:#38a169;" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /></svg>
-                <div class="geo-kpi-val">99%</div>
-              </div>
-              <span>Uptime</span>
+            <div class="swot-card w">
+              <h4>Weaknesses</h4>
+              <p style="font-size:0.85rem; margin-top:8px;">Standalone net losses are high. Heavy dependence on partner bank CBS uptimes.</p>
             </div>
-            <div class="geo-kpi">
-              <div class="geo-kpi-ring">
-                <svg viewBox="0 0 36 36"><path class="circle" stroke-dasharray="40, 100" style="stroke:#f6ad55;" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" /></svg>
-                <div class="geo-kpi-val">40M</div>
-              </div>
-              <span>API Calls/Mo</span>
+            <div class="swot-card o">
+              <h4>Opportunities</h4>
+              <p style="font-size:0.85rem; margin-top:8px;">Explosive adoption of Account Aggregator (AA) framework for loan underwriting in India.</p>
+            </div>
+            <div class="swot-card t">
+              <h4>Threats</h4>
+              <p style="font-size:0.85rem; margin-top:8px;">Rapid shifts in RBI compliance rules and direct competitor features.</p>
             </div>
           </div>
         </div>
-        <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="scale" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Ecosystem Hubs & Partners</button></div>
-      </div>
-      
-      <!-- Ecosystem Diagram -->
-      <div class="geo-eco-diagram-wrapper fade-up">
-        <h4 style="text-align:center; color:#a0aec0; margin-bottom:24px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; font-size:0.8rem;">How Setu Fits Into India</h4>
-        <div class="geo-eco-flow">
-          <div class="geo-eco-node" data-eco="citizen">
-            <i class="fas fa-user"></i>
-            <span>Citizen</span>
-          </div>
-          <div class="geo-eco-arrow"></div>
-          <div class="geo-eco-node" data-eco="fintech">
-            <i class="fas fa-mobile-alt"></i>
-            <span>Fintech App</span>
-          </div>
-          <div class="geo-eco-arrow highlight"></div>
-          <div class="geo-eco-node highlight" data-eco="setu">
-            <img src="./setu-logo.svg" alt="Setu" style="height:20px; filter:brightness(0) invert(1);" />
-          </div>
-          <div class="geo-eco-arrow highlight"></div>
-          <div class="geo-eco-node" data-eco="stack">
-            <i class="fas fa-layer-group"></i>
-            <span>India Stack</span>
-          </div>
-          <div class="geo-eco-arrow"></div>
-          <div class="geo-eco-node" data-eco="bank">
-            <i class="fas fa-university"></i>
-            <span>Banks</span>
+
+        <!-- 18. Porter's Five Forces Analysis -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">18</div>
+          <h3 class="sub-title">Porter's Five Forces Analysis</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            <ul>
+              <li style="margin-bottom:8px;"><strong>Threat of New Entrants (Low):</strong> Highly complex regulatory frameworks and bank partnership negotiations block early entrants.</li>
+              <li style="margin-bottom:8px;"><strong>Bargaining Power of Buyers (Medium):</strong> Fintech developers can switch between API providers (Razorpay, Setu) easily.</li>
+              <li style="margin-bottom:8px;"><strong>Bargaining Power of Suppliers (High):</strong> Setu is ultimately reliant on the core bank infrastructure.</li>
+              <li style="margin-bottom:8px;"><strong>Threat of Substitutes (Low):</strong> Standard API integrations are mandatory to scale consumer finance.</li>
+              <li style="margin-bottom:8px;"><strong>Intensity of Competitive Rivalry (High):</strong> Heavy competition with Razorpay, M2P Fintech, and Decentro.</li>
+            </ul>
           </div>
         </div>
-        <p id="eco-expl" style="text-align:center; margin-top:16px; font-size:0.85rem; color:#718096; min-height:40px;">Hover over any node above to understand its responsibility in the value chain.</p>
+
+        <!-- 19. Risk Assessment & Challenges -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">19</div>
+          <h3 class="sub-title">Risk Assessment & Challenges</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Operating as an API layer exposes Setu to **Operational Risk** (bank server latency) and **Regulatory Risk** (RBI policy updates). They mitigate this by hosting active multi-bank failovers and conducting quarterly third-party penetration audits.
+          </div>
+        </div>
+
+        <!-- 20. Industry Impact & Market Influence -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">20</div>
+          <h3 class="sub-title">Industry Impact & Market Influence</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Setu drastically lowered the friction barrier for Indian fintech. By providing structured sandbox tools and standardized JSON integrations, they turned a 3-month integration process into a 2-hour copy-paste setup, helping launch dozens of neo-banking startups.
+          </div>
+        </div>
+
+        <!-- 24. Awards, Recognition & Milestones -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">24</div>
+          <h3 class="sub-title">Awards, Recognition & Milestones</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Featured in the Forbes Fintech 50 India, and recognized as a pioneer in digital public infrastructure by the Bill & Melinda Gates Foundation.
+          </div>
+        </div>
+
+        <!-- 25. News, Updates & Recent Developments -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">25</div>
+          <h3 class="sub-title">News, Updates & Recent Developments</h3>
+          <div class="news-grid" style="margin-top:16px;">
+            <div class="news-card">
+              <div class="news-date">June 2022</div>
+              <h4 style="color:var(--primary-color);">Pine Labs Acquisition</h4>
+              <p style="font-size:0.85rem; margin-top:8px;">Setu acquired by Pine Labs for $70-75M to build Plural embedded finance rails.</p>
+            </div>
+            <div class="news-card">
+              <div class="news-date">April 2021</div>
+              <h4 style="color:var(--primary-color);">Series A Closure</h4>
+              <p style="font-size:0.85rem; margin-top:8px;">Raised $15M led by Falcon Edge to expand Account Aggregator frameworks.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 26. Future Roadmap & Growth Strategy -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">26</div>
+          <h3 class="sub-title">Future Roadmap & Growth Strategy</h3>
+          <div style="font-size: 0.9rem; color: #a0aec0; line-height: 1.6;">
+            Expanding the API layer beyond India into the Southeast Asian market using Pine Labs' established merchant network under the "Plural" brand.
+          </div>
+        </div>
+
+        <!-- 28. References, Sources & Research Bibliography -->
+        <div class="enc-subheading-card">
+          <div class="sub-number">28</div>
+          <h3 class="sub-title">References, Sources & Research Bibliography</h3>
+          <div class="v2-ref-box">
+            <div style="margin-bottom:8px;">• Pine Labs Press Release (June 2022) - Setu Acquisition Details</div>
+            <div style="margin-bottom:8px;">• Fintrackr / Entrackr FY23 Financial Report for BrokenTusk Technologies</div>
+            <div style="margin-bottom:8px;">• Reserve Bank Innovation Hub (RBIH) official appointment notices (July 2025)</div>
+            <div style="margin-bottom:8px;">• iSPIRT Foundation public member registry & IndiaStack Developer Ecosystem reports</div>
+          </div>
+        </div>
+
       </div>
 
-    </div>
-  </section>
-  <!-- 5. Status Today -->
-
-  <section id="status" class="section">
-    <div class="container fade-up">
-      <span class="sec-tag">Status Today</span>
-      <h2 class="sec-title">Current State & Analysis</h2>
-
-      <div class="swot-grid">
-        <div class="swot-card s stagger-item d-1">
-          <h4>Strengths</h4>
-          <p style="font-size:0.9rem; margin-top:8px;">First-mover advantage in API infrastructure. Unmatched regulatory expertise of founders. Acquired by Pine Labs ($5B valuation), securing massive distribution.</p>
-        </div>
-        <div class="swot-card w stagger-item d-2">
-          <h4>Weaknesses</h4>
-          <p style="font-size:0.9rem; margin-top:8px;">Highly dependent on shifting RBI regulations and NPCI infrastructure uptime. Departure of founding team post-acquisition.</p>
-        </div>
-        <div class="swot-card o stagger-item d-3">
-          <h4>Opportunities</h4>
-          <p style="font-size:0.9rem; margin-top:8px;">Account Aggregator (AA) framework explosion in India. Expanding into global embedded finance under the Pine Labs "Plural" brand.</p>
-        </div>
-        <div class="swot-card t stagger-item d-4">
-          <h4>Threats</h4>
-          <p style="font-size:0.9rem; margin-top:8px;">Rise of well-funded competitors like M2P Fintech, Decentro, and RazorpayX entering the API infrastructure space.</p>
-        </div>
-      </div>
-      <div style="text-align:center; margin-top:32px; width: 100%;"><button class="btn-primary explore-btn" data-module="status" style="background:var(--primary-color); border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; color:#091016; font-size: 0.9rem;">Explore Financial & SWOT Analysis</button></div>
-
-      <h3 style="margin-bottom: 24px;">Major Milestones & News</h3>
-      <div class="news-grid">
-        <div class="news-card">
-          <div class="news-date">June 2022</div>
-          <h4 style="color:var(--primary-color);">$70–$75M Acquisition</h4>
-          <p style="font-size:0.9rem; margin-top:12px;">Pine Labs successfully acquires Setu to build a unified embedded finance offering.</p>
-        </div>
-        <div class="news-card">
-          <div class="news-date">April 2021</div>
-          <h4 style="color:var(--primary-color);">Series A Funding</h4>
-          <p style="font-size:0.9rem; margin-top:12px;">Raised $15M led by Falcon Edge and Lightspeed to scale Account Aggregator APIs.</p>
-        </div>
-        <div class="news-card">
-          <div class="news-date">April 2019</div>
-          <h4 style="color:var(--primary-color);">Seed Round</h4>
-          <p style="font-size:0.9rem; margin-top:12px;">Raised $3.5M led by Lightspeed India to build the initial API bridge for banks.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -683,20 +831,6 @@ l30 31 -38 32 c-25 21 -46 31 -60 28 -13 -2 -29 3 -40 15 -18 20 -11 34 21 40
     <img src="./setu-logo.svg" alt="Setu" style="height: 32px; filter: brightness(0) invert(1); margin-bottom: 24px;">
     <p style="color:#a0aec0; font-size:0.9rem;">Interactive Fintech Encyclopedia • Built for High-Density Data Storytelling</p>
   </footer>
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- Research Drawer -->
-  <div id="research-drawer" class="research-drawer">
-    <div class="drawer-header">
-      <h3 id="drawer-title" style="margin:0; font-size:1.4rem; color:#fff;">Research Module</h3>
-      <span id="close-drawer" class="close-drawer">&times;</span>
-    </div>
-    <div class="drawer-body" id="drawer-body">
-      <!-- Dynamic content will be injected here -->
-    </div>
-  </div>
 
 
   <div id="node-modal" class="node-modal">
